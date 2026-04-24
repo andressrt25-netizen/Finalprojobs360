@@ -1,15 +1,303 @@
 <!DOCTYPE html>
-<html lang="en" data-attribute="bilingual">
+<html lang="en" id="html-root">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Document</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ProJobs360 – The Labor Marketplace for Construction | Riverside, CA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Welcome to the Bilingual Site</h1>
-    <p data-attribute="lang-en">This is a sample text in English.</p>
-    <p data-attribute="lang-es">Este es un texto de muestra en español.</p>
-    <script src="js/main.js"></script>
+
+<nav>
+  <a href="#hero" class="logo"><span class="logo-pro">PRO</span><span class="logo-lens"></span><span class="logo-jobs">JOBS</span><span class="logo-360">360</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#how" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
+      <li><a href="#services" data-en="Trades" data-es="Oficios">Trades</a></li>
+      <li><a href="#roadmap" data-en="Roadmap" data-es="Hoja de Ruta">Roadmap</a></li>
+      <li><a href="#movement" data-en="Investors" data-es="Inversores">Investors</a></li>
+      <li><a href="#signup" class="nav-cta" data-en="Get Started" data-es="Comenzar">Get Started</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<div class="announce" style="margin-top:64px">
+  <p data-en="🔥 <strong>Now accepting workers &amp; contractors</strong> in Riverside &amp; the Inland Empire — <strong>Free to join</strong>"
+     data-es="🔥 <strong>Ya aceptamos trabajadores y contratistas</strong> en Riverside y el Valle Interior — <strong>Gratis unirse</strong>">
+    🔥 <strong>Now accepting workers &amp; contractors</strong> in Riverside &amp; the Inland Empire — <strong>Free to join</strong>
+  </p>
+</div>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-en="Now Live · Riverside, CA · Inland Empire" data-es="Ya en Vivo · Riverside, CA · Valle Interior">Now Live · Riverside, CA · Inland Empire</div>
+    <h1>
+      <span class="h1-white" data-en="YOU SHOULDN'T HAVE TO" data-es="NO TIENES QUE">YOU SHOULDN'T HAVE TO</span>
+      <span class="h1-orange" data-en="STAND ON A CORNER" data-es="PARARTE EN UNA ESQUINA">STAND ON A CORNER</span>
+      <span class="h1-outline" data-en="AND HOPE" data-es="Y ESPERAR">AND HOPE</span>
+    </h1>
+    <p class="hero-sub"
+       data-en="Riverside's construction backbone deserves better than exploitation and invisible labor. <strong>ProJobs360</strong> connects workers with contractors — same day, no middlemen, full respect."
+       data-es="La columna vertebral de la construcción de Riverside merece mejor que la explotación y el trabajo invisible. <strong>ProJobs360</strong> conecta trabajadores con contratistas — mismo día, sin intermediarios, con pleno respeto.">
+      Riverside's construction backbone deserves better than exploitation and invisible labor. <strong>ProJobs360</strong> connects workers with contractors — same day, no middlemen, full respect.
+    </p>
+    <div class="same-day-banner">
+      <span class="sdb-dot"></span>
+      <span data-en="GET PAID THE SAME DAY YOU WORK &nbsp;·&nbsp; EN INGLÉS Y ESPAÑOL" data-es="COBRA EL MISMO DÍA QUE TRABAJAS &nbsp;·&nbsp; IN ENGLISH AND SPANISH">GET PAID THE SAME DAY YOU WORK &nbsp;·&nbsp; EN INGLÉS Y ESPAÑOL</span>
+    </div>
+    <div class="hero-buttons">
+      <a href="#signup" class="btn-primary" data-en="Find Work — It's Free" data-es="Busca Trabajo — Es Gratis">Find Work — It's Free</a>
+      <a href="#signup" class="btn-secondary" data-en="Post a Job" data-es="Publicar un Trabajo">Post a Job</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num" data-en="FREE" data-es="GRATIS">FREE</div><div class="stat-label" data-en="For Workers" data-es="Para Trabajadores">For Workers</div></div>
+      <div class="stat-item"><div class="stat-num" data-en="SAME DAY" data-es="MISMO DÍA">SAME DAY</div><div class="stat-label" data-en="Payment" data-es="Pago">Payment</div></div>
+      <div class="stat-item"><div class="stat-num">360°</div><div class="stat-label" data-en="Coverage" data-es="Cobertura">Coverage</div></div>
+      <div class="stat-item"><div class="stat-num" data-en="ZERO" data-es="CERO">ZERO</div><div class="stat-label" data-en="Middlemen" data-es="Intermediarios">Middlemen</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="rmap-bg"></div>
+  <div class="scroll-lines"><div class="scroll-line"></div><div class="scroll-line"></div><div class="scroll-line"></div><div class="scroll-line"></div><div class="scroll-line"></div><div class="scroll-line"></div></div>
+  <div class="grid-overlay"></div>
+  <div class="rmap-header reveal">
+    <div class="section-label" style="justify-content:center;color:var(--accent)" data-en="The ProJobs360 Vision" data-es="La Visión de ProJobs360">The ProJobs360 Vision</div>
+    <h2 class="section-title" style="font-size:clamp(2.8rem,6vw,5.5rem);line-height:0.92">
+      <span class="title-line1" data-en="FROM A CORNER" data-es="DESDE UNA ESQUINA">FROM A CORNER</span>
+      <span class="title-line2" data-en="IN RIVERSIDE" data-es="EN RIVERSIDE">IN RIVERSIDE</span>
+      <span class="title-line3" data-en="TO A BILLION DOLLAR EMPIRE" data-es="HACIA UN IMPERIO DE MIL MILLONES">TO A BILLION DOLLAR EMPIRE</span>
+    </h2>
+    <p class="section-sub" style="margin:1.2rem auto 0;color:var(--muted)" data-en="Click each worker. Watch what we're building. Every phase earned. Every milestone real." data-es="Haz clic en cada trabajador. Mira lo que estamos construyendo. Cada fase ganada. Cada hito real.">Click each worker. Watch what we're building. Every phase earned. Every milestone real.</p>
+  </div>
+
+  <div class="phase-row ph01 reveal">
+    <div class="phase-sil" id="sil01" onclick="triggerDrill()">
+      <div class="particles" id="parts01"></div>
+      <svg class="worker-svg" viewBox="0 0 280 320" fill="none">
+        <rect x="180" y="60" width="80" height="200" fill="rgba(240,96,32,.05)" stroke="rgba(240,96,32,.2)" stroke-width="1"/>
+        <line x1="180" y1="100" x2="260" y2="100" stroke="rgba(240,96,32,.12)" stroke-width="1"/>
+        <line x1="180" y1="140" x2="260" y2="140" stroke="rgba(240,96,32,.12)" stroke-width="1"/>
+        <line x1="180" y1="180" x2="260" y2="180" stroke="rgba(240,96,32,.12)" stroke-width="1"/>
+        <line x1="220" y1="60" x2="220" y2="100" stroke="rgba(240,96,32,.12)" stroke-width="1"/>
+        <ellipse cx="110" cy="55" rx="25" ry="28" fill="#F06020" opacity=".95"/>
+        <path d="M85 45 Q110 20 135 45 L132 55 Q110 48 88 55 Z" fill="#D94010"/>
+        <rect x="82" y="52" width="56" height="6" rx="2" fill="#fff" opacity=".15"/>
+        <path d="M75 83 Q110 75 145 83 L150 160 Q110 168 70 160 Z" fill="#F06020" opacity=".95"/>
+        <path d="M75 90 L45 130 L55 140 L85 105 Z" fill="#D94010" opacity=".9"/>
+        <path d="M145 90 L175 125 L165 135 L135 105 Z" fill="#D94010" opacity=".9"/>
+        <path d="M85 158 L75 240 L95 242 L110 175 Z" fill="#F06020" opacity=".85"/>
+        <path d="M125 158 L135 240 L115 242 L108 175 Z" fill="#F06020" opacity=".85"/>
+        <path d="M73 238 L58 252 L98 254 L97 240 Z" fill="#fff" opacity=".9"/>
+        <path d="M113 240 L108 254 L148 252 L137 238 Z" fill="#fff" opacity=".9"/>
+        <g id="drillGroup">
+          <rect x="152" y="118" width="48" height="22" rx="5" fill="#fff" opacity=".9"/>
+          <rect x="152" y="122" width="14" height="14" rx="3" fill="#F06020"/>
+          <rect x="200" y="126" width="32" height="6" rx="2" fill="#D94010"/>
+          <line x1="204" y1="126" x2="208" y2="132" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+          <line x1="210" y1="126" x2="214" y2="132" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+          <line x1="216" y1="126" x2="220" y2="132" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+          <line x1="222" y1="126" x2="226" y2="132" stroke="#fff" stroke-width="1.5" opacity=".5"/>
+          <path d="M158 140 L162 155 L170 153 L166 138 Z" fill="#D94010"/>
+        </g>
+        <circle id="drillHole" cx="232" cy="129" r="0" fill="#000"/>
+        <circle id="drillHoleOuter" cx="232" cy="129" r="0" fill="none" stroke="rgba(240,96,32,.5)" stroke-width="1.5"/>
+        <g id="sparks01" opacity="0"></g>
+      </svg>
+      <div class="sil-hint" data-en="// click to drill" data-es="// clic para taladrar">// click to drill</div>
+    </div>
+    <div class="phase-card-wrap"><div class="phase-card">
+      <span class="phase-badge badge-live" data-en="● LIVE NOW" data-es="● EN VIVO">● LIVE NOW</span>
+      <div class="phase-num">// PHASE 01</div>
+      <div class="phase-title" data-en="LABOR MARKETPLACE" data-es="MERCADO LABORAL">LABOR MARKETPLACE</div>
+      <div class="phase-trigger" data-en="Launching in Riverside, CA" data-es="Lanzando en Riverside, CA">Launching in Riverside, CA</div>
+      <ul class="phase-features">
+        <li data-en="Worker-to-contractor matching" data-es="Emparejamiento trabajador-contratista">Worker-to-contractor matching</li>
+        <li data-en="Free worker listings always" data-es="Listados de trabajadores siempre gratis">Free worker listings always</li>
+        <li data-en="Same-day payment" data-es="Pago el mismo día">Same-day payment</li>
+        <li data-en="SMS job alerts — no app needed" data-es="Alertas de trabajo por SMS — sin app">SMS job alerts — no app needed</li>
+        <li data-en="English &amp; Spanish support" data-es="Soporte en inglés y español">English &amp; Spanish support</li>
+        <li data-en="Verified contractor network" data-es="Red de contratistas verificados">Verified contractor network</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="phase-connector"><div class="connector-line" style="--from-color:#F06020;--to-color:#FF8C00"><div class="connector-dot" style="--dot-color:#FF8C00"></div></div></div>
+
+  <div class="phase-row ph02 reverse reveal">
+    <div class="phase-sil" id="sil02" onclick="triggerHammer()">
+      <div class="particles" id="parts02"></div>
+      <svg class="worker-svg" viewBox="0 0 280 320" fill="none">
+        <rect x="10" y="40" width="16" height="260" fill="rgba(255,140,0,.08)" stroke="rgba(255,140,0,.2)" stroke-width="1"/>
+        <rect x="10" y="40" width="100" height="16" fill="rgba(255,140,0,.08)" stroke="rgba(255,140,0,.2)" stroke-width="1"/>
+        <rect x="10" y="160" width="100" height="16" fill="rgba(255,140,0,.08)" stroke="rgba(255,140,0,.2)" stroke-width="1"/>
+        <rect x="10" y="284" width="100" height="16" fill="rgba(255,140,0,.08)" stroke="rgba(255,140,0,.2)" stroke-width="1"/>
+        <rect id="nailHead" x="58" y="148" width="12" height="6" rx="2" fill="#fff" opacity=".9"/>
+        <rect id="nailShaft" x="62" y="154" width="4" height="20" fill="#999"/>
+        <ellipse cx="170" cy="55" rx="25" ry="28" fill="#fff" opacity=".95"/>
+        <path d="M145 45 Q170 20 195 45 L192 55 Q170 48 148 55 Z" fill="#eee"/>
+        <rect x="142" y="52" width="56" height="6" rx="2" fill="#F06020"/>
+        <path d="M135 83 Q170 75 205 83 L210 160 Q170 168 130 160 Z" fill="#fff" opacity=".9"/>
+        <path d="M135 90 L115 145 L128 150 L148 100 Z" fill="#ddd" opacity=".9"/>
+        <g id="hammerArm">
+          <path d="M200 88 L230 45 L218 38 L188 82 Z" fill="#ddd" opacity=".9"/>
+          <rect x="218" y="18" width="40" height="22" rx="4" fill="#F06020"/>
+          <rect x="218" y="18" width="18" height="22" rx="3" fill="#D94010"/>
+          <rect x="232" y="38" width="8" height="32" rx="3" fill="#888"/>
+        </g>
+        <path d="M145 158 L135 240 L155 242 L168 175 Z" fill="#fff" opacity=".85"/>
+        <path d="M185 158 L195 240 L175 242 L170 175 Z" fill="#fff" opacity=".85"/>
+        <path d="M133 238 L118 252 L158 254 L157 240 Z" fill="#F06020"/>
+        <path d="M173 240 L168 254 L208 252 L197 238 Z" fill="#F06020"/>
+      </svg>
+      <div class="sil-hint" data-en="// click to hammer" data-es="// clic para martillar">// click to hammer</div>
+    </div>
+    <div class="phase-card-wrap"><div class="phase-card">
+      <span class="phase-badge badge-soon" data-en="PHASE 02" data-es="FASE 02">PHASE 02</span>
+      <div class="phase-num">// PHASE 02</div>
+      <div class="phase-title" data-en="REPUTATION ENGINE" data-es="MOTOR DE REPUTACIÓN">REPUTATION ENGINE</div>
+      <div class="phase-trigger" data-en="Unlocks at 5,000 users" data-es="Se activa con 5,000 usuarios">Unlocks at 5,000 users</div>
+      <ul class="phase-features">
+        <li data-en="Badge &amp; trophy system" data-es="Sistema de insignias y trofeos">Badge &amp; trophy system</li>
+        <li data-en="Crew leader profiles" data-es="Perfiles de líderes de cuadrilla">Crew leader profiles</li>
+        <li data-en="Team booking for contractors" data-es="Reserva de equipos para contratistas">Team booking for contractors</li>
+        <li data-en="Worker credit building" data-es="Construcción de crédito del trabajador">Worker credit building</li>
+        <li data-en="Dispute resolution system" data-es="Sistema de resolución de disputas">Dispute resolution system</li>
+        <li data-en="Escrow payment protection" data-es="Protección de pago en custodia">Escrow payment protection</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="phase-connector"><div class="connector-line" style="--from-color:#FF8C00;--to-color:rgba(255,255,255,0.4)"><div class="connector-dot" style="--dot-color:#fff"></div></div></div>
+
+  <div class="phase-row ph03 reveal">
+    <div class="phase-sil" id="sil03" onclick="triggerPaint()">
+      <div class="particles" id="parts03"></div>
+      <div class="paint-wall"><div class="paint-layer" id="paintLayer"></div></div>
+      <svg class="worker-svg" viewBox="0 0 280 320" fill="none">
+        <rect x="20" y="30" width="220" height="180" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+        <rect x="40" y="55" width="45" height="55" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        <rect x="110" y="55" width="45" height="55" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        <rect x="180" y="55" width="40" height="55" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        <rect id="paintTrail" x="30" y="148" width="0" height="28" fill="rgba(240,96,32,.35)" rx="2"/>
+        <rect x="0" y="200" width="280" height="8" fill="rgba(255,255,255,.08)"/>
+        <rect x="20" y="208" width="6" height="80" fill="rgba(255,255,255,.06)"/>
+        <rect x="254" y="208" width="6" height="80" fill="rgba(255,255,255,.06)"/>
+        <ellipse cx="140" cy="175" rx="20" ry="22" fill="#fff" opacity=".95"/>
+        <path d="M120 167 Q140 148 160 167 L158 175 Q140 169 122 175 Z" fill="#ddd"/>
+        <rect x="118" y="172" width="44" height="5" rx="2" fill="#F06020"/>
+        <path d="M110 192 Q140 185 170 192 L173 245 Q140 252 107 245 Z" fill="#fff" opacity=".9"/>
+        <path d="M112 198 L90 230 L100 236 L122 208 Z" fill="#ddd" opacity=".9"/>
+        <g id="rollerArm">
+          <path d="M166 196 L220 178 L216 166 L162 184 Z" fill="#ddd" opacity=".9"/>
+          <g id="paintRoller">
+            <rect x="208" y="155" width="42" height="18" rx="8" fill="#F06020"/>
+            <rect x="214" y="158" width="30" height="12" rx="6" fill="rgba(255,255,255,.2)"/>
+            <rect x="216" y="173" width="6" height="28" rx="3" fill="#888"/>
+          </g>
+        </g>
+        <path d="M120 243 L112 290 L130 291 L140 255 Z" fill="#fff" opacity=".85"/>
+        <path d="M155 243 L163 290 L145 291 L142 255 Z" fill="#fff" opacity=".85"/>
+        <g id="paintDrips" opacity="0">
+          <ellipse cx="215" cy="175" rx="3" ry="5" fill="rgba(240,96,32,.6)"/>
+          <ellipse cx="225" cy="178" rx="2" ry="4" fill="rgba(240,96,32,.5)"/>
+          <ellipse cx="235" cy="174" rx="2" ry="6" fill="rgba(240,96,32,.7)"/>
+        </g>
+      </svg>
+      <div class="sil-hint" data-en="// click to paint" data-es="// clic para pintar">// click to paint</div>
+    </div>
+    <div class="phase-card-wrap"><div class="phase-card">
+      <span class="phase-badge badge-future" data-en="PHASE 03" data-es="FASE 03">PHASE 03</span>
+      <div class="phase-num">// PHASE 03</div>
+      <div class="phase-title" data-en="FULL ECOSYSTEM" data-es="ECOSISTEMA COMPLETO">FULL ECOSYSTEM</div>
+      <div class="phase-trigger" data-en="Unlocks at 50,000 users" data-es="Se activa con 50,000 usuarios">Unlocks at 50,000 users</div>
+      <ul class="phase-features">
+        <li data-en="Homeowner bid board" data-es="Tablero de licitaciones para propietarios">Homeowner bid board</li>
+        <li data-en="Materials marketplace" data-es="Mercado de materiales">Materials marketplace</li>
+        <li data-en="Architect connections" data-es="Conexiones con arquitectos">Architect connections</li>
+        <li data-en="Small loans for workers" data-es="Préstamos pequeños para trabajadores">Small loans for workers</li>
+        <li data-en="Healthcare access program" data-es="Programa de acceso a salud">Healthcare access program</li>
+        <li data-en="Oil &amp; energy sector expansion" data-es="Expansión al sector petrolero y energético">Oil &amp; energy sector expansion</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="phase-connector"><div class="connector-line" style="--from-color:rgba(255,255,255,0.4);--to-color:#4a9eff"><div class="connector-dot" style="--dot-color:#4a9eff"></div></div></div>
+
+  <div class="phase-row ph04 reverse reveal">
+    <div class="phase-sil" id="sil04" onclick="triggerFuture()">
+      <div class="particles" id="parts04"></div>
+      <canvas id="cityCanvas" width="340" height="340" style="position:absolute;inset:0;width:100%;height:100%;border-radius:8px;"></canvas>
+      <svg class="worker-svg" viewBox="0 0 280 320" fill="none" style="position:relative;z-index:2">
+        <rect x="20" y="270" width="240" height="6" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.3)" stroke-width="1" rx="1"/>
+        <ellipse cx="140" cy="185" rx="22" ry="24" fill="#fff" opacity=".95"/>
+        <path d="M118 177 Q140 155 162 177 L160 185 Q140 179 120 185 Z" fill="#ddd"/>
+        <rect x="116" y="182" width="48" height="5" rx="2" fill="#F06020"/>
+        <rect x="122" y="167" width="36" height="14" rx="6" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <path d="M110 209 Q140 202 170 209 L172 255 Q140 262 108 255 Z" fill="#fff" opacity=".9"/>
+        <line x1="118" y1="218" x2="162" y2="218" stroke="rgba(240,96,32,.5)" stroke-width="1"/>
+        <line x1="116" y1="230" x2="160" y2="230" stroke="rgba(240,96,32,.3)" stroke-width="1"/>
+        <line x1="118" y1="242" x2="158" y2="242" stroke="rgba(240,96,32,.5)" stroke-width="1"/>
+        <path d="M112 215 L88 245 L98 252 L120 225 Z" fill="#ddd" opacity=".9"/>
+        <rect x="68" y="240" width="38" height="26" rx="4" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+        <rect x="73" y="244" width="8" height="16" fill="rgba(255,255,255,.2)"/>
+        <rect x="84" y="248" width="6" height="12" fill="rgba(240,96,32,.4)"/>
+        <rect x="93" y="244" width="8" height="18" fill="rgba(255,255,255,.15)"/>
+        <path d="M168 213 L215 195 L210 183 L163 201 Z" fill="#ddd" opacity=".9"/>
+        <circle cx="218" cy="190" r="4" fill="rgba(255,255,255,.6)" id="pointGlow"/>
+        <circle cx="218" cy="190" r="8" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1" id="pointRing"/>
+        <line id="energyBeam" x1="218" y1="190" x2="218" y2="10" stroke="rgba(255,255,255,0)" stroke-width="1" stroke-dasharray="4,4"/>
+        <path d="M120 253 L112 290 L128 291 L138 265 Z" fill="#fff" opacity=".85"/>
+        <path d="M156 253 L164 290 L148 291 L144 265 Z" fill="#fff" opacity=".85"/>
+        <path d="M110 288 L95 302 L132 304 L131 290 Z" fill="#F06020"/>
+        <path d="M146 290 L141 304 L178 302 L167 288 Z" fill="#F06020"/>
+        <g id="dataParticles">
+          <circle cx="195" cy="175" r="2" fill="rgba(255,255,255,.5)"/>
+          <circle cx="205" cy="160" r="1.5" fill="rgba(240,96,32,.6)"/>
+          <circle cx="212" cy="175" r="2" fill="rgba(255,255,255,.4)"/>
+        </g>
+        <ellipse id="holoRing1" cx="140" cy="270" rx="0" ry="0" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+        <ellipse id="holoRing2" cx="140" cy="270" rx="0" ry="0" fill="none" stroke="rgba(240,96,32,.25)" stroke-width="1"/>
+      </svg>
+      <div class="sil-hint" data-en="// click to build the future" data-es="// clic para construir el futuro">// click to build the future</div>
+    </div>
+    <div class="phase-card-wrap"><div class="phase-card">
+      <span class="phase-badge badge-ultimate" data-en="PHASE 04" data-es="FASE 04">PHASE 04</span>
+      <div class="phase-num">// PHASE 04</div>
+      <div class="phase-title" data-en="INFRASTRUCTURE" data-es="INFRAESTRUCTURA">INFRASTRUCTURE</div>
+      <div class="phase-trigger" data-en="Unlocks at 100,000+ users" data-es="Se activa con 100,000+ usuarios">Unlocks at 100,000+ users</div>
+      <ul class="phase-features">
+        <li data-en="Real-time crew dispatch" data-es="Despacho de cuadrillas en tiempo real">Real-time crew dispatch</li>
+        <li data-en="Physical recruiting centers" data-es="Centros de reclutamiento físicos">Physical recruiting centers</li>
+        <li data-en="Worker equity program" data-es="Programa de capital para trabajadores">Worker equity program</li>
+        <li data-en="ProJobs360 financial services" data-es="Servicios financieros ProJobs360">ProJobs360 financial services</li>
+        <li data-en="National warehouse network" data-es="Red nacional de almacenes">National warehouse network</li>
+        <li data-en="Enterprise &amp; Fortune 500 hiring" data-es="Contratación empresarial y Fortune 500">Enterprise &amp; Fortune 500 hiring</li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span class="fl-pro">PRO</span><span class="fl-lens"></span><span class="fl-jobs">JOBS</span><span class="fl-360">360</span></div>
+  <p data-en="© 2026 ProJobs360.com · The Labor Marketplace for Construction · Riverside, CA · All Rights Reserved" data-es="© 2026 ProJobs360.com · El Mercado Laboral para Construcción · Riverside, CA · Todos los Derechos Reservados">© 2026 ProJobs360.com · The Labor Marketplace for Construction · Riverside, CA · All Rights Reserved</p>
+  <ul class="footer-links">
+    <li><a href="#" data-en="Privacy" data-es="Privacidad">Privacy</a></li>
+    <li><a href="#" data-en="Terms" data-es="Términos">Terms</a></li>
+    <li><a href="#signup" data-en="Contact" data-es="Contacto">Contact</a></li>
+    <li><a href="#roadmap" data-en="Roadmap" data-es="Hoja de Ruta">Roadmap</a></li>
+    <li><a href="#movement" data-en="Investors" data-es="Inversores">Investors</a></li>
+  </ul>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
