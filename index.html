@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ProJobs360 – Find Work. Find Workers. Same Day Pay. | Riverside, CA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+--bg:#000;--s1:#0a0a0a;--s2:#111;--s3:#161616;
+--o:#F06020;--o2:#D94010;--ob:#FF8C00;
+--w:#fff;--w2:#e8e8e8;--w3:#aaa;--w4:#666;
+--bdr:rgba(240,96,32,.22);--bdw:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#000;color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(0,0,0,.97);border-bottom:1px solid var(--bdr);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;text-decoration:none;display:flex;align-items:center;letter-spacing:.05em;}
+.lp{color:var(--o);}
+.ll{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:1.3rem;position:relative;margin:0 .06rem;}
+.ll::before,.ll::after{content:'';position:absolute;width:.8rem;height:.8rem;border:2px solid var(--w);border-radius:50%;}
+.ll::before{left:0;}
+.ll::after{right:0;}
+.lj{color:var(--w);}
+.l3{color:var(--w4);}
+.nav-r{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--w3);text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--w);}
+.lang-tog{display:flex;border:1px solid var(--bdw);border-radius:3px;overflow:hidden;}
+.lb{background:none;border:none;color:var(--w3);font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.1em;padding:.38rem .7rem;cursor:pointer;transition:all .2s;}
+.lb.on{background:var(--o);color:var(--w);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:6rem 5% 4rem;text-align:center;overflow:hidden;}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:55px 55px;}
+.hglow{position:absolute;top:25%;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse,rgba(240,96,32,.18) 0%,rgba(240,96,32,.05) 45%,transparent 70%);pointer-events:none;}
+.hcontent{position:relative;z-index:2;max-width:1000px;width:100%;}
+.hbadge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(240,96,32,.1);border:1px solid var(--bdr);color:var(--o);font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.18em;padding:.4rem 1rem;border-radius:100px;margin-bottom:1.8rem;}
+.hbdot{width:6px;height:6px;background:var(--o);border-radius:50%;animation:blink 2s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.5);}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-height:.88;letter-spacing:.01em;margin-bottom:1.5rem;}
+.h1a{display:block;color:var(--w);}
+.h1b{display:block;color:var(--o);}
+.h1c{display:block;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.5);}
+.hsub{font-size:1.05rem;color:var(--w3);max-width:560px;margin:0 auto .8rem;line-height:1.8;font-weight:300;}
+.hsub strong{color:var(--w);font-weight:600;}
+.sdpay{display:inline-flex;align-items:center;gap:.6rem;background:#000;border:1px solid var(--o);color:var(--w);font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;padding:.55rem 1.3rem;border-radius:3px;margin:.8rem auto 2.8rem;}
+.sdpay-dot{width:7px;height:7px;background:var(--o);border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0;}
+
+/* HERO BUTTONS — THE TWO MAIN CTAs */
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+.cta-work{
+  background:var(--o);
+  color:var(--w);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;
+  letter-spacing:.08em;
+  padding:1.2rem 3.5rem;
+  border-radius:4px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 0 40px rgba(240,96,32,.4);
+  display:inline-flex;align-items:center;gap:.7rem;
+  white-space:nowrap;
+}
+.cta-work:hover{background:var(--o2);transform:translateY(-3px);box-shadow:0 0 60px rgba(240,96,32,.55);}
+.cta-work-icon{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.cta-hire{
+  background:var(--w);
+  color:#000;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;
+  letter-spacing:.08em;
+  padding:1.2rem 3.5rem;
+  border-radius:4px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  transition:background .2s,transform .15s;
+  display:inline-flex;align-items:center;gap:.7rem;
+  white-space:nowrap;
+}
+.cta-hire:hover{background:var(--w2);transform:translateY(-3px);}
+.cta-hire-icon{width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.cta-label{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--w3);letter-spacing:.12em;text-transform:uppercase;margin-top:.5rem;}
+
+/* HERO STATS */
+.hstats{display:flex;justify-content:center;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.07);flex-wrap:wrap;}
+.hstat{padding:0 2.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.07);}
+.hstat:last-child{border-right:none;}
+.hsnum{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:var(--o);}
+.hslbl{font-size:.62rem;color:var(--w4);letter-spacing:.15em;text-transform:uppercase;margin-top:.25rem;font-family:'Space Mono',monospace;}
+
+/* HOW IT WORKS */
+#how{padding:0;overflow:hidden;}
+.how-label{background:var(--o);padding:.6rem 5%;display:flex;align-items:center;gap:1rem;}
+.how-label-text{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em;color:var(--w);}
+.how-label-sub{font-family:'Space Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase;}
+.how-label-div{width:1px;height:32px;background:rgba(255,255,255,.25);}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;}
+/* CONTRACTOR SIDE — WHITE */
+.how-contractor{background:var(--w);color:#000;padding:5rem 6%;}
+.how-contractor .hw-head{margin-bottom:3rem;}
+.how-contractor .hw-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
+.how-contractor .hw-eyebrow::before{content:'';width:20px;height:2px;background:var(--o);}
+.how-contractor .hw-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);line-height:.92;color:#000;margin-bottom:.8rem;}
+.how-contractor .hw-sub{font-size:.9rem;color:#555;line-height:1.7;font-weight:300;max-width:380px;}
+.how-step-c{display:flex;gap:1.4rem;align-items:flex-start;padding:1.6rem 0;border-bottom:1px solid rgba(0,0,0,.08);cursor:pointer;transition:background .2s;border-radius:6px;padding-left:.8rem;padding-right:.8rem;}
+.how-step-c:last-child{border-bottom:none;}
+.how-step-c:hover{background:rgba(240,96,32,.05);}
+.how-step-c.active{background:rgba(240,96,32,.08);}
+.step-num-c{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--o);line-height:1;flex-shrink:0;width:2.8rem;}
+.step-body-c h4{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;margin-bottom:.35rem;color:#000;}
+.step-body-c p{font-size:.82rem;color:#666;line-height:1.7;font-weight:300;}
+.step-body-c .step-tag{display:inline-block;background:var(--o);color:var(--w);font-size:.6rem;font-family:'Space Mono',monospace;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;margin-top:.5rem;}
+/* WORKER SIDE — BLACK */
+.how-worker{background:#000;color:var(--w);padding:5rem 6%;border-left:1px solid rgba(255,255,255,.06);}
+.how-worker .hw-head{margin-bottom:3rem;}
+.how-worker .hw-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
+.how-worker .hw-eyebrow::before{content:'';width:20px;height:2px;background:var(--o);}
+.how-worker .hw-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);line-height:.92;color:var(--w);margin-bottom:.8rem;}
+.how-worker .hw-sub{font-size:.9rem;color:var(--w4);line-height:1.7;font-weight:300;max-width:380px;}
+.how-step-w{display:flex;gap:1.4rem;align-items:flex-start;padding:1.6rem 0;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:background .2s;border-radius:6px;padding-left:.8rem;padding-right:.8rem;}
+.how-step-w:last-child{border-bottom:none;}
+.how-step-w:hover{background:rgba(255,255,255,.04);}
+.how-step-w.active{background:rgba(240,96,32,.1);}
+.step-num-w{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--o);line-height:1;flex-shrink:0;width:2.8rem;}
+.step-body-w h4{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;margin-bottom:.35rem;color:var(--w);}
+.step-body-w p{font-size:.82rem;color:var(--w4);line-height:1.7;font-weight:300;}
+.step-body-w .step-tag{display:inline-block;background:var(--o);color:var(--w);font-size:.6rem;font-family:'Space Mono',monospace;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;margin-top:.5rem;}
+
+/* SAY DAY PAY */
+#pay{background:var(--o);padding:5rem 5%;}
+.pay-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.pay-left{}
+.pay-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
+.pay-eyebrow::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.7);}
+.pay-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,10vw,9rem);line-height:.85;color:var(--w);margin-bottom:1.5rem;}
+.pay-sub{font-size:.95rem;line-height:1.8;color:rgba(255,255,255,.8);font-weight:300;max-width:420px;}
+.pay-right{display:flex;flex-direction:column;gap:1px;background:rgba(0,0,0,.12);border-radius:8px;overflow:hidden;}
+.pay-step{background:rgba(0,0,0,.18);padding:1.4rem 1.8rem;display:flex;align-items:flex-start;gap:1.2rem;transition:background .2s;cursor:pointer;}
+.pay-step:hover{background:rgba(0,0,0,.32);}
+.pay-step-n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:rgba(255,255,255,.35);line-height:1;flex-shrink:0;width:2.5rem;}
+.pay-step-c h4{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--w);margin-bottom:.25rem;}
+.pay-step-c p{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.55;font-weight:300;}
+
+/* TRUST */
+#trust{background:#000;padding:0;overflow:hidden;}
+.trust-bar{background:var(--o2);padding:.9rem 5%;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+.trust-bar-item{display:flex;align-items:center;gap:.6rem;}
+.trust-bar-dot{width:6px;height:6px;background:#fff;border-radius:50%;flex-shrink:0;}
+.trust-bar-text{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:#fff;text-transform:uppercase;}
+.trust-content{padding:4rem 5%;}
+.trust-inner{max-width:1100px;margin:0 auto;}
+.trust-head{margin-bottom:3rem;}
+.trust-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5.5rem);line-height:.9;margin-bottom:1rem;}
+.trust-headline .tw{color:var(--w);}
+.trust-headline .to{color:var(--o);}
+.trust-headline .tx{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.3);}
+.trust-intro{font-size:.95rem;color:var(--w4);line-height:1.8;max-width:650px;font-weight:300;}
+.trust-intro strong{color:var(--w);}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden;margin-top:2.5rem;}
+.trust-item{background:var(--s2);padding:2rem;position:relative;transition:background .2s;cursor:pointer;}
+.trust-item:hover{background:var(--s3);}
+.trust-n{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--o);opacity:.1;position:absolute;top:.8rem;right:1rem;line-height:1;}
+.trust-icon{width:40px;height:40px;background:var(--o);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem;}
+.trust-title{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;margin-bottom:.5rem;color:var(--w);letter-spacing:.04em;}
+.trust-desc{font-size:.8rem;color:var(--w4);line-height:1.65;font-weight:300;}
+.trust-bottom{background:var(--o);padding:1.5rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:0;}
+.trust-bottom-stats{display:flex;gap:3rem;flex-wrap:wrap;}
+.tbs{text-align:center;}
+.tbs-n{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--w);line-height:1;}
+.tbs-l{font-family:'Space Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.7);letter-spacing:.12em;text-transform:uppercase;margin-top:.2rem;}
+.trust-bottom-cta{background:var(--w);color:var(--o);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;padding:.7rem 1.8rem;border-radius:3px;text-decoration:none;transition:background .2s;}
+.trust-bottom-cta:hover{background:var(--w2);}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--s1);padding:5rem 5%;}
+.test-inner{max-width:1100px;margin:0 auto;}
+.test-head{margin-bottom:3rem;}
+.test-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
+.test-eyebrow::before{content:'';width:20px;height:2px;background:var(--o);}
+.test-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,4rem);line-height:.95;}
+.test-title .tw{color:var(--w);}
+.test-title .to{color:var(--o);}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden;}
+.test-card{background:var(--s2);padding:2rem;transition:background .2s;}
+.test-card:hover{background:var(--s3);}
+.test-stars{display:flex;gap:3px;margin-bottom:1rem;}
+.test-star{width:12px;height:12px;background:var(--o);border-radius:2px;}
+.test-quote{font-size:.88rem;color:var(--w2);line-height:1.75;margin-bottom:1.5rem;font-weight:300;font-style:italic;}
+.test-author{display:flex;align-items:center;gap:.75rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.07);}
+.test-av{width:36px;height:36px;border-radius:6px;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--w);flex-shrink:0;}
+.test-name{font-size:.8rem;font-weight:600;color:var(--w);}
+.test-role{font-size:.7rem;color:var(--w4);}
+
+/* SIGNUP */
+#signup{background:#000;padding:5rem 5%;}
+.signup-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.signup-left{}
+.signup-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
+.signup-eyebrow::before{content:'';width:20px;height:2px;background:var(--o);}
+.signup-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);line-height:.92;margin-bottom:1.5rem;}
+.signup-title .tw{color:var(--w);}
+.signup-title .to{color:var(--o);}
+.signup-perks{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem;}
+.signup-perks li{display:flex;align-items:flex-start;gap:.8rem;font-size:.88rem;color:var(--w2);line-height:1.6;}
+.pk{width:20px;height:20px;border-radius:3px;background:var(--o);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--w);font-weight:700;flex-shrink:0;margin-top:1px;}
+form{display:flex;flex-direction:column;gap:.8rem;}
+.fg{display:flex;flex-direction:column;gap:.3rem;}
+.fl{font-size:.62rem;color:var(--w4);letter-spacing:.12em;text-transform:uppercase;font-family:'Space Mono',monospace;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+input,textarea,select{background:var(--s2);border:1px solid rgba(255,255,255,.09);border-radius:4px;color:var(--w);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.78rem 1rem;width:100%;outline:none;transition:border-color .2s,box-shadow .2s;}
+input::placeholder,textarea::placeholder{color:var(--w4);}
+input:focus,textarea:focus,select:focus{border-color:var(--o);box-shadow:0 0 0 2px rgba(240,96,32,.12);}
+textarea{resize:vertical;min-height:80px;}
+select option{background:var(--s2);}
+.sub-btn{background:var(--o);color:var(--w);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.1em;padding:.9rem;border-radius:4px;border:none;cursor:pointer;transition:background .2s,transform .15s;margin-top:.3rem;}
+.sub-btn:hover{background:var(--o2);transform:translateY(-1px);}
+.succ{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--w);border-radius:5px;padding:.9rem 1.2rem;font-size:.85rem;display:none;margin-top:.4rem;text-align:center;}
+
+/* FOOTER */
+footer{background:var(--s1);border-top:1px solid rgba(255,255,255,.07);padding:2rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;display:flex;align-items:center;}
+.flp{color:var(--o);}
+.fll{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1rem;position:relative;margin:0 .05rem;}
+.fll::before{content:'';position:absolute;width:.6rem;height:.6rem;border:1.5px solid var(--w);border-radius:50%;left:0;}
+.fll::after{content:'';position:absolute;width:.6rem;height:.6rem;border:1.5px solid var(--w);border-radius:50%;right:0;}
+.flj{color:var(--w);}
+.fl3{color:var(--w4);}
+footer p{color:var(--w4);font-size:.72rem;}
+.flinks{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap;}
+.flinks a{color:var(--w4);text-decoration:none;font-size:.72rem;transition:color .2s;}
+.flinks a:hover{color:var(--w);}
+
+/* ANIMS */
+@keyframes particleBurst{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0);}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .how-grid{grid-template-columns:1fr;}
+  .how-worker{border-left:none;border-top:1px solid rgba(255,255,255,.06);}
+  .pay-inner{grid-template-columns:1fr;gap:3rem;}
+  .signup-inner{grid-template-columns:1fr;gap:3rem;}
+  .trust-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  nav ul{display:none;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .cta-work,.cta-hire{width:100%;max-width:340px;justify-content:center;font-size:1.4rem;}
+  .hstat{padding:1.2rem 1.5rem;border-right:none;border-bottom:1px solid rgba(255,255,255,.07);}
+  .hstat:last-child{border-bottom:none;}
+  .hstats{flex-direction:column;}
+  .trust-grid{grid-template-columns:1fr;}
+  .fr2{grid-template-columns:1fr;}
+  .trust-bottom-stats{gap:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo"><span class="lp">PRO</span><span class="ll"></span><span class="lj">JOBS</span><span class="l3">360</span></a>
+  <div class="nav-r">
+    <ul class="nav-links">
+      <li><a href="#how" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
+      <li><a href="#trust" data-en="Why Us" data-es="Por Qué Nosotros">Why Us</a></li>
+      <li><a href="/vision" data-en="Vision" data-es="Visión">Vision</a></li>
+      <li><a href="/platform" data-en="Platform" data-es="Plataforma">Platform</a></li>
+      <li><a href="/investors" data-en="Investors" data-es="Inversores">Investors</a></li>
+    </ul>
+    <div class="lang-tog">
+      <button class="lb on" onclick="setLang('en')">EN</button>
+      <button class="lb" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hgrid"></div>
+  <div class="hglow"></div>
+  <div class="hcontent">
+    <div class="hbadge"><span class="hbdot"></span><span data-en="Now Live · Riverside, CA · Inland Empire" data-es="Ya en Vivo · Riverside, CA · Valle Interior">Now Live · Riverside, CA · Inland Empire</span></div>
+    <h1>
+      <span class="h1a" data-en="YOU SHOULDN'T HAVE TO" data-es="NO TIENES QUE">YOU SHOULDN'T HAVE TO</span>
+      <span class="h1b" data-en="STAND ON A CORNER" data-es="PARARTE EN UNA ESQUINA">STAND ON A CORNER</span>
+      <span class="h1c" data-en="AND HOPE" data-es="Y ESPERAR">AND HOPE</span>
+    </h1>
+    <p class="hsub" data-en="Riverside's construction backbone deserves better. <strong>ProJobs360</strong> connects workers with contractors — same day pay, no middlemen, full respect." data-es="La construcción de Riverside merece mejor. <strong>ProJobs360</strong> conecta trabajadores con contratistas — pago mismo día, sin intermediarios, pleno respeto.">Riverside's construction backbone deserves better. <strong>ProJobs360</strong> connects workers with contractors — same day pay, no middlemen, full respect.</p>
+    <div class="sdpay">
+      <span class="sdpay-dot"></span>
+      <span data-en="GET PAID THE SAME DAY YOU WORK · EN INGLÉS Y ESPAÑOL" data-es="COBRA EL MISMO DÍA QUE TRABAJAS · IN ENGLISH AND SPANISH">GET PAID THE SAME DAY YOU WORK · EN INGLÉS Y ESPAÑOL</span>
+    </div>
+
+    <!-- THE TWO BIG BUTTONS -->
+    <div class="hero-btns">
+      <div>
+        <a href="#signup" class="cta-work" onclick="preselectRole('worker')">
+          <span class="cta-work-icon">👷</span>
+          <span data-en="FIND WORK — FREE" data-es="BUSCA TRABAJO — GRATIS">FIND WORK — FREE</span>
+        </a>
+        <div class="cta-label" data-en="For workers · Always free to join" data-es="Para trabajadores · Siempre gratis">For workers · Always free to join</div>
+      </div>
+      <div>
+        <a href="#signup" class="cta-hire" onclick="preselectRole('contractor')">
+          <span class="cta-hire-icon">🏗️</span>
+          <span data-en="FIND A WORKER" data-es="BUSCA UN TRABAJADOR">FIND A WORKER</span>
+        </a>
+        <div class="cta-label" data-en="For contractors · Post a job in 2 min" data-es="Para contratistas · Publica un trabajo en 2 min">For contractors · Post a job in 2 min</div>
+      </div>
+    </div>
+
+    <div class="hstats">
+      <div class="hstat"><div class="hsnum" data-en="FREE" data-es="GRATIS">FREE</div><div class="hslbl" data-en="For Workers" data-es="Para Trabajadores">For Workers</div></div>
+      <div class="hstat"><div class="hsnum" data-en="SAME DAY" data-es="MISMO DÍA">SAME DAY</div><div class="hslbl" data-en="Payment" data-es="Pago">Payment</div></div>
+      <div class="hstat"><div class="hsnum">360°</div><div class="hslbl" data-en="Coverage" data-es="Cobertura">Coverage</div></div>
+      <div class="hstat"><div class="hsnum" data-en="ZERO" data-es="CERO">ZERO</div><div class="hslbl" data-en="Middlemen" data-es="Intermediarios">Middlemen</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-label">
+    <div><div class="how-label-text" data-en="HOW IT WORKS" data-es="CÓMO FUNCIONA">HOW IT WORKS</div></div>
+    <div class="how-label-div"></div>
+    <div><div class="how-label-sub" data-en="Simple · Fast · Fair · No middlemen" data-es="Simple · Rápido · Justo · Sin intermediarios">Simple · Fast · Fair · No middlemen</div></div>
+  </div>
+  <div class="how-grid">
+
+    <!-- CONTRACTOR SIDE — WHITE -->
+    <div class="how-contractor reveal">
+      <div class="hw-head">
+        <div class="hw-eyebrow" data-en="For Contractors" data-es="Para Contratistas">For Contractors</div>
+        <h2 class="hw-title" data-en="GET YOUR CREW.<br>SAME DAY." data-es="CONSIGUE TU CUADRILLA.<br>MISMO DÍA.">GET YOUR CREW.<br>SAME DAY.</h2>
+        <p class="hw-sub" data-en="Stop wasting mornings gambling on corners. Verified workers, instantly." data-es="Deja de perder mañanas apostando en esquinas. Trabajadores verificados, al instante.">Stop wasting mornings gambling on corners. Verified workers, instantly.</p>
+      </div>
+      <div class="how-steps" id="csteps">
+        <div class="how-step-c" onclick="activateStep(this,'csteps')">
+          <div class="step-num-c">01</div>
+          <div class="step-body-c">
+            <h4 data-en="Post Your Job" data-es="Publica tu Trabajo">Post Your Job</h4>
+            <p data-en="Trade needed, location, daily rate. Two minutes flat. No phone calls. No agencies." data-es="Oficio requerido, ubicación, tarifa diaria. Dos minutos exactos. Sin llamadas. Sin agencias.">Trade needed, location, daily rate. Two minutes flat. No phone calls. No agencies.</p>
+            <span class="step-tag" data-en="Takes 2 minutes" data-es="Tarda 2 minutos">Takes 2 minutes</span>
+          </div>
+        </div>
+        <div class="how-step-c" onclick="activateStep(this,'csteps')">
+          <div class="step-num-c">02</div>
+          <div class="step-body-c">
+            <h4 data-en="Workers Come to You" data-es="Los Trabajadores Llegan a Ti">Workers Come to You</h4>
+            <p data-en="Verified workers in your area get alerted instantly. You see full profiles, skills, ratings, and reliability scores." data-es="Trabajadores verificados en tu área son alertados al instante. Ves perfiles completos, habilidades, calificaciones y puntajes de confiabilidad.">Verified workers in your area get alerted instantly. You see full profiles, skills, ratings, and reliability scores.</p>
+            <span class="step-tag" data-en="Instant alerts" data-es="Alertas inmediatas">Instant alerts</span>
+          </div>
+        </div>
+        <div class="how-step-c" onclick="activateStep(this,'csteps')">
+          <div class="step-num-c">03</div>
+          <div class="step-body-c">
+            <h4 data-en="They Show Up. You Build." data-es="Ellos Llegan. Tú Construyes.">They Show Up. You Build.</h4>
+            <p data-en="Confirm the hire. Worker arrives ready. Pay through the platform same day. No checks, no cash, no drama." data-es="Confirma la contratación. El trabajador llega listo. Paga a través de la plataforma el mismo día. Sin cheques, sin efectivo, sin drama.">Confirm the hire. Worker arrives ready. Pay through the platform same day. No checks, no cash, no drama.</p>
+            <span class="step-tag" data-en="Same day payment" data-es="Pago mismo día">Same day payment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKER SIDE — BLACK -->
+    <div class="how-worker reveal">
+      <div class="hw-head">
+        <div class="hw-eyebrow" data-en="For Workers" data-es="Para Trabajadores">For Workers</div>
+        <h2 class="hw-title" data-en="GET PAID.<br>SAME DAY." data-es="COBRA.<br>MISMO DÍA.">GET PAID.<br>SAME DAY.</h2>
+        <p class="hw-sub" data-en="No more corners. No more hoping. Jobs come to your phone." data-es="Sin más esquinas. Sin más esperar. Los trabajos llegan a tu teléfono.">No more corners. No more hoping. Jobs come to your phone.</p>
+      </div>
+      <div class="how-steps" id="wsteps">
+        <div class="how-step-w" onclick="activateStep(this,'wsteps')">
+          <div class="step-num-w">01</div>
+          <div class="step-body-w">
+            <h4 data-en="List Yourself — Free" data-es="Regístrate — Gratis">List Yourself — Free</h4>
+            <p data-en="Name, trade, location, availability. Done in minutes. No fees. No credit card. Never." data-es="Nombre, oficio, ubicación, disponibilidad. Listo en minutos. Sin cargos. Sin tarjeta. Jamás.">Name, trade, location, availability. Done in minutes. No fees. No credit card. Never.</p>
+            <span class="step-tag" data-en="100% free forever" data-es="100% gratis siempre">100% free forever</span>
+          </div>
+        </div>
+        <div class="how-step-w" onclick="activateStep(this,'wsteps')">
+          <div class="step-num-w">02</div>
+          <div class="step-body-w">
+            <h4 data-en="Get a Text. Get a Job." data-es="Recibe un Texto. Consigue Trabajo.">Get a Text. Get a Job.</h4>
+            <p data-en="When a contractor near Riverside needs your skills, your phone buzzes. No app needed. Any phone. Any carrier." data-es="Cuando un contratista cerca de Riverside necesita tus habilidades, tu teléfono vibra. Sin app. Cualquier teléfono. Cualquier operador.">When a contractor near Riverside needs your skills, your phone buzzes. No app needed. Any phone. Any carrier.</p>
+            <span class="step-tag" data-en="No app needed" data-es="Sin app necesaria">No app needed</span>
+          </div>
+        </div>
+        <div class="how-step-w" onclick="activateStep(this,'wsteps')">
+          <div class="step-num-w">03</div>
+          <div class="step-body-w">
+            <h4 data-en="Work Today. Paid Today." data-es="Trabaja Hoy. Cobra Hoy.">Work Today. Paid Today.</h4>
+            <p data-en="Show up. Do the work. Get paid before you leave the job site. No Friday wait. No check fees. Just money in your account." data-es="Preséntate. Haz el trabajo. Cobra antes de salir del sitio. Sin esperar al viernes. Sin comisiones. Solo dinero en tu cuenta.">Show up. Do the work. Get paid before you leave the job site. No Friday wait. No check fees. Just money in your account.</p>
+            <span class="step-tag" data-en="Paid same day" data-es="Cobras el mismo día">Paid same day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SAME DAY PAY -->
+<section id="pay">
+  <div class="pay-inner">
+    <div class="pay-left reveal">
+      <div class="pay-eyebrow" data-en="The Standard We Set" data-es="El Estándar Que Establecemos">The Standard We Set</div>
+      <div class="pay-big" data-en="SAME<br>DAY.<br>PAID." data-es="MISMO<br>DÍA.<br>PAGADO.">SAME<br>DAY.<br>PAID.</div>
+      <p class="pay-sub" data-en="You worked. You earned it. You shouldn't wait until Friday. You shouldn't pay $8 at Chase to cash a check. Same-day payment is not a feature — it is respect. It says your labor has immediate value." data-es="Trabajaste. Te lo ganaste. No deberías esperar al viernes. No deberías pagar $8 para cobrar un cheque. El pago mismo día no es una función — es respeto. Dice que tu trabajo tiene valor inmediato.">You worked. You earned it. You shouldn't wait until Friday. You shouldn't pay $8 at Chase to cash a check. Same-day payment is not a feature — it is respect. It says your labor has immediate value.</p>
+    </div>
+    <div class="pay-right reveal">
+      <div class="pay-step">
+        <div class="pay-step-n">01</div>
+        <div class="pay-step-c"><h4 data-en="Find a Job on ProJobs360" data-es="Encuentra Trabajo en ProJobs360">Find a Job on ProJobs360</h4><p data-en="Browse jobs near Riverside or get a text the moment one posts for your trade." data-es="Busca trabajos cerca de Riverside o recibe un texto en el momento en que publiquen uno para tu oficio.">Browse jobs near Riverside or get a text the moment one posts for your trade.</p></div>
+      </div>
+      <div class="pay-step">
+        <div class="pay-step-n">02</div>
+        <div class="pay-step-c"><h4 data-en="Show Up. Do the Work." data-es="Preséntate. Haz el Trabajo.">Show Up. Do the Work.</h4><p data-en="The contractor knows you're coming. No guessing. No standing at corners in the dark." data-es="El contratista sabe que vas. Sin suposiciones. Sin pararte en esquinas en la oscuridad.">The contractor knows you're coming. No guessing. No standing at corners in the dark.</p></div>
+      </div>
+      <div class="pay-step">
+        <div class="pay-step-n">03</div>
+        <div class="pay-step-c"><h4 data-en="Paid Before You Leave" data-es="Cobras Antes de Irte">Paid Before You Leave</h4><p data-en="Payment releases same day through the platform. Directly to your account. That's the deal. Every time." data-es="El pago se libera el mismo día a través de la plataforma. Directo a tu cuenta. Ese es el trato. Cada vez.">Payment releases same day through the platform. Directly to your account. That's the deal. Every time.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST — AGGRESSIVE -->
+<section id="trust">
+  <div class="trust-bar">
+    <div class="trust-bar-item"><span class="trust-bar-dot"></span><span class="trust-bar-text" data-en="The corner never protected you." data-es="La esquina nunca te protegió.">The corner never protected you.</span></div>
+    <div class="trust-bar-item"><span class="trust-bar-dot"></span><span class="trust-bar-text" data-en="We do." data-es="Nosotros sí.">We do.</span></div>
+    <div class="trust-bar-item"><span class="trust-bar-dot"></span><span class="trust-bar-text" data-en="6 ironclad guarantees. Zero exceptions." data-es="6 garantías inquebrantables. Cero excepciones.">6 ironclad guarantees. Zero exceptions.</span></div>
+  </div>
+  <div class="trust-content">
+    <div class="trust-inner">
+      <div class="trust-head reveal">
+        <h2 class="trust-headline">
+          <span class="tw" data-en="NO EXPLOITATION." data-es="SIN EXPLOTACIÓN.">NO EXPLOITATION.</span><br>
+          <span class="to" data-en="NO MIDDLEMEN." data-es="SIN INTERMEDIARIOS.">NO MIDDLEMEN.</span><br>
+          <span class="tx" data-en="NO EXCUSES." data-es="SIN EXCUSAS.">NO EXCUSES.</span>
+        </h2>
+        <p class="trust-intro" data-en="The construction labor market has been broken for <strong>decades</strong>. Workers exploited at corners. Contractors burned by no-shows. <strong>That ends now.</strong>" data-es="El mercado laboral de construcción ha estado roto por <strong>décadas</strong>. Trabajadores explotados en esquinas. Contratistas quemados por ausencias. <strong>Eso termina ahora.</strong>">The construction labor market has been broken for <strong>decades</strong>. Workers exploited at corners. Contractors burned by no-shows. <strong>That ends now.</strong></p>
+      </div>
+      <div class="trust-grid reveal">
+        <div class="trust-item"><div class="trust-n">01</div><div class="trust-icon">✅</div><div class="trust-title" data-en="Verified Contractors Only" data-es="Solo Contratistas Verificados">Verified Contractors Only</div><div class="trust-desc" data-en="Every contractor verified before posting. No fake listings. No scams. You know who you're working for." data-es="Cada contratista verificado antes de publicar. Sin listados falsos. Sin estafas. Sabes para quién trabajas.">Every contractor verified before posting. No fake listings. No scams. You know who you're working for.</div></div>
+        <div class="trust-item"><div class="trust-n">02</div><div class="trust-icon">🔒</div><div class="trust-title" data-en="Background Checks" data-es="Verificación de Antecedentes">Background Checks</div><div class="trust-desc" data-en="Workers who verify earn trust faster. Contractors can filter verified-only. Safety for everyone on site." data-es="Los trabajadores que se verifican ganan confianza más rápido. Los contratistas pueden filtrar solo verificados. Seguridad para todos en obra.">Workers who verify earn trust faster. Contractors can filter verified-only. Safety for everyone on site.</div></div>
+        <div class="trust-item"><div class="trust-n">03</div><div class="trust-icon">⚖️</div><div class="trust-title" data-en="Dispute Protection" data-es="Protección de Disputas">Dispute Protection</div><div class="trust-desc" data-en="Contractor doesn't pay? We step in. Full stop. No one gets stiffed on our platform. Ever." data-es="¿Contratista no paga? Intervenimos. Punto final. Nadie se queda sin pago en nuestra plataforma. Jamás.">Contractor doesn't pay? We step in. Full stop. No one gets stiffed on our platform. Ever.</div></div>
+        <div class="trust-item"><div class="trust-n">04</div><div class="trust-icon">📱</div><div class="trust-title" data-en="SMS — No App Needed" data-es="SMS — Sin App">SMS — No App Needed</div><div class="trust-desc" data-en="Jobs come to your phone by text. Any phone. Any carrier. Not having a smartphone won't cost you a job." data-es="Los trabajos llegan por mensaje. Cualquier teléfono. Cualquier operador. No tener smartphone no te costará un trabajo.">Jobs come to your phone by text. Any phone. Any carrier. Not having a smartphone won't cost you a job.</div></div>
+        <div class="trust-item"><div class="trust-n">05</div><div class="trust-icon">🌎</div><div class="trust-title" data-en="English &amp; Spanish" data-es="Inglés y Español">English &amp; Spanish</div><div class="trust-desc" data-en="Fully bilingual. The backbone of Riverside construction speaks more than one language. So do we." data-es="Completamente bilingüe. La columna de la construcción de Riverside habla más de un idioma. Nosotros también.">Fully bilingual. The backbone of Riverside construction speaks more than one language. So do we.</div></div>
+        <div class="trust-item"><div class="trust-n">06</div><div class="trust-icon">💳</div><div class="trust-title" data-en="Same-Day Payment. Period." data-es="Pago Mismo Día. Punto.">Same-Day Payment. Period.</div><div class="trust-desc" data-en="No checks. No waiting. No bank fees. Paid the same day you work. Your labor has immediate value." data-es="Sin cheques. Sin espera. Sin comisiones bancarias. Pagado el mismo día que trabajas. Tu trabajo tiene valor inmediato.">No checks. No waiting. No bank fees. Paid the same day you work. Your labor has immediate value.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="trust-bottom">
+    <div class="trust-bottom-stats">
+      <div class="tbs"><div class="tbs-n">100%</div><div class="tbs-l" data-en="Contractors Verified" data-es="Contratistas Verificados">Contractors Verified</div></div>
+      <div class="tbs"><div class="tbs-n" data-en="SAME DAY" data-es="MISMO DÍA">SAME DAY</div><div class="tbs-l" data-en="Always Paid" data-es="Siempre Pagado">Always Paid</div></div>
+      <div class="tbs"><div class="tbs-n">$0</div><div class="tbs-l" data-en="Worker Fees" data-es="Cargos al Trabajador">Worker Fees</div></div>
+      <div class="tbs"><div class="tbs-n" data-en="ZERO" data-es="CERO">ZERO</div><div class="tbs-l" data-en="Middlemen" data-es="Intermediarios">Middlemen</div></div>
+    </div>
+    <a href="#signup" class="trust-bottom-cta" data-en="Join Free — No Fees →" data-es="Únete Gratis — Sin Cargos →">Join Free — No Fees →</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-inner">
+    <div class="test-head reveal">
+      <div class="test-eyebrow" data-en="Real Workers. Real Results." data-es="Trabajadores Reales. Resultados Reales.">Real Workers. Real Results.</div>
+      <h2 class="test-title"><span class="tw" data-en="THEY BUILT IT." data-es="ELLOS LO CONSTRUYERON.">THEY BUILT IT.</span> <span class="to" data-en="WE GOT THEM PAID." data-es="NOSOTROS LOS PAGAMOS.">WE GOT THEM PAID.</span></h2>
+    </div>
+    <div class="test-grid reveal">
+      <div class="test-card">
+        <div class="test-stars"><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div></div>
+        <p class="test-quote" data-en="Got paid the same day I finished the job. Never happened before in 15 years of construction. This is how it should always work." data-es="Me pagaron el mismo día que terminé. Nunca había pasado en 15 años de construcción. Así es como siempre debería funcionar.">Got paid the same day I finished the job. Never happened before in 15 years of construction. This is how it should always work.</p>
+        <div class="test-author"><div class="test-av">MR</div><div><div class="test-name">Marco R.</div><div class="test-role">Electrician · Riverside, CA</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars"><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div></div>
+        <p class="test-quote" data-en="I used to stand outside Home Depot on Arlington at 6am hoping someone would pick me. Now I wake up with job offers on my phone." data-es="Solía pararme afuera del Home Depot en Arlington a las 6am. Ahora me despierto con ofertas de trabajo en mi teléfono.">I used to stand outside Home Depot on Arlington at 6am hoping someone would pick me. Now I wake up with job offers on my phone.</p>
+        <div class="test-author"><div class="test-av">JM</div><div><div class="test-name">Jose M.</div><div class="test-role">General Labor · San Bernardino, CA</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars"><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div></div>
+        <p class="test-quote" data-en="Found three reliable workers in one afternoon. No middleman. No drama. They showed up, did the job, got paid. I'll never go back." data-es="Encontré tres trabajadores confiables en una tarde. Sin intermediario. Sin drama. Se presentaron, hicieron el trabajo, se pagaron.">Found three reliable workers in one afternoon. No middleman. No drama. They showed up, did the job, got paid. I'll never go back.</p>
+        <div class="test-author"><div class="test-av">RK</div><div><div class="test-name">Robert K.</div><div class="test-role">General Contractor · Inland Empire</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars"><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div><div class="test-star"></div></div>
+        <p class="test-quote" data-en="I'm 17 and made $800 last week doing landscaping after school in Riverside. My parents couldn't believe it. This platform is real." data-es="Tengo 17 años y gané $800 la semana pasada haciendo jardinería después de la escuela en Riverside. Mis padres no lo podían creer.">I'm 17 and made $800 last week doing landscaping after school in Riverside. My parents couldn't believe it. This platform is real.</p>
+        <div class="test-author"><div class="test-av">JT</div><div><div class="test-name">James T.</div><div class="test-role">Student Worker · Riverside, CA</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNUP -->
+<section id="signup">
+  <div class="signup-inner">
+    <div class="signup-left reveal">
+      <div class="signup-eyebrow" data-en="Join the Movement" data-es="Únete al Movimiento">Join the Movement</div>
+      <h2 class="signup-title"><span class="tw" data-en="GET STARTED" data-es="COMIENZA">GET STARTED</span><br><span class="to" data-en="TODAY" data-es="HOY">TODAY</span></h2>
+      <ul class="signup-perks">
+        <li><span class="pk">✓</span><span data-en="Free to list as a worker — always" data-es="Gratis para registrarse como trabajador — siempre">Free to list as a worker — always</span></li>
+        <li><span class="pk">✓</span><span data-en="Get paid same day you work" data-es="Cobra el mismo día que trabajas">Get paid same day you work</span></li>
+        <li><span class="pk">✓</span><span data-en="No middlemen taking your cut" data-es="Sin intermediarios llevándose tu parte">No middlemen taking your cut</span></li>
+        <li><span class="pk">✓</span><span data-en="SMS job alerts in English &amp; Spanish" data-es="Alertas de trabajo por SMS en inglés y español">SMS job alerts in English &amp; Spanish</span></li>
+        <li><span class="pk">✓</span><span data-en="Verified contractors only" data-es="Solo contratistas verificados">Verified contractors only</span></li>
+        <li><span class="pk">✓</span><span data-en="Dispute protection if you're not paid" data-es="Protección si no te pagan">Dispute protection if you're not paid</span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <form onsubmit="handleSubmit(event)" id="mainForm">
+        <div class="fr2">
+          <div class="fg"><label class="fl" data-en="First Name" data-es="Nombre">First Name</label><input type="text" placeholder="Maria" required/></div>
+          <div class="fg"><label class="fl" data-en="Last Name" data-es="Apellido">Last Name</label><input type="text" placeholder="Rodriguez" required/></div>
+        </div>
+        <div class="fg"><label class="fl" data-en="Email Address" data-es="Correo Electrónico">Email Address</label><input type="email" placeholder="you@email.com" required/></div>
+        <div class="fg"><label class="fl" data-en="Phone — For SMS Job Alerts" data-es="Teléfono — Para Alertas SMS">Phone — For SMS Job Alerts</label><input type="tel" placeholder="(951) 000-0000"/></div>
+        <div class="fg"><label class="fl" data-en="I Am A..." data-es="Yo Soy...">I Am A...</label>
+          <select id="roleSelect" required>
+            <option value="" disabled selected data-en="Select your role" data-es="Selecciona tu rol">Select your role</option>
+            <option value="worker" data-en="Worker looking for jobs — FREE" data-es="Trabajador buscando empleo — GRATIS">Worker looking for jobs — FREE</option>
+            <option value="contractor" data-en="Contractor looking for workers" data-es="Contratista buscando trabajadores">Contractor looking for workers</option>
+            <option value="investor" data-en="Accredited investor" data-es="Inversor acreditado">Accredited investor</option>
+            <option value="partner" data-en="Business partner" data-es="Socio comercial">Business partner</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl" data-en="City" data-es="Ciudad">City</label><input type="text" placeholder="Riverside, CA"/></div>
+        <div class="fg"><label class="fl" data-en="Anything else we should know?" data-es="¿Algo más que debamos saber?">Anything else we should know?</label><textarea placeholder="Your trade, experience, or what you're looking for..."></textarea></div>
+        <button type="submit" class="sub-btn" data-en="JOIN PROJOBS360 — FREE →" data-es="ÚNETE A PROJOBS360 — GRATIS →">JOIN PROJOBS360 — FREE →</button>
+        <div class="succ" id="succMsg" data-en="✅ You're in! We'll be in touch within 24 hours." data-es="✅ ¡Estás dentro! Nos pondremos en contacto en 24 horas.">✅ You're in! We'll be in touch within 24 hours.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo"><span class="flp">PRO</span><span class="fll"></span><span class="flj">JOBS</span><span class="fl3">360</span></div>
+  <p data-en="© 2026 ProJobs360.com · Riverside, CA · The Labor Marketplace for Construction" data-es="© 2026 ProJobs360.com · Riverside, CA · El Mercado Laboral para Construcción">© 2026 ProJobs360.com · Riverside, CA · The Labor Marketplace for Construction</p>
+  <ul class="flinks">
+    <li><a href="/about" data-en="Our Story" data-es="Nuestra Historia">Our Story</a></li>
+    <li><a href="/vision" data-en="Vision" data-es="Visión">Vision</a></li>
+    <li><a href="/trades" data-en="All Trades" data-es="Todos los Oficios">All Trades</a></li>
+    <li><a href="/platform" data-en="Platform" data-es="Plataforma">Platform</a></li>
+    <li><a href="/investors" data-en="Investors" data-es="Inversores">Investors</a></li>
+    <li><a href="#" data-en="Privacy" data-es="Privacidad">Privacy</a></li>
+    <li><a href="#" data-en="Terms" data-es="Términos">Terms</a></li>
+  </ul>
+</footer>
+
+<script>
+// REVEAL
+const ro=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);ro.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// LANGUAGE
+let lang='en';
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase()===l));
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v=el.getAttribute('data-'+l);if(!v)return;
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=v;
+    else if(el.tagName==='OPTION')el.textContent=v;
+    else el.innerHTML=v;
+  });
+  document.getElementById('html-root').lang=l==='es'?'es':'en';
+}
+
+// PRESELECT ROLE FROM HERO BUTTONS
+function preselectRole(role){
+  setTimeout(()=>{
+    const sel=document.getElementById('roleSelect');
+    if(sel){
+      for(let i=0;i<sel.options.length;i++){
+        if(sel.options[i].value===role){sel.selectedIndex=i;break;}
+      }
+      sel.style.borderColor='#F06020';
+      sel.style.boxShadow='0 0 0 2px rgba(240,96,32,0.2)';
+      setTimeout(()=>{sel.style.borderColor='';sel.style.boxShadow='';},2000);
+    }
+  },400);
+}
+
+// STEP INTERACTIVITY
+function activateStep(el,groupId){
+  document.querySelectorAll('#'+groupId+' [class^="how-step"]').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// AUTO-ACTIVATE FIRST STEPS
+document.querySelectorAll('.how-step-c:first-of-type,.how-step-w:first-of-type').forEach(s=>{
+  if(s)setTimeout(()=>s.classList.add('active'),800);
+});
+
+// FORM SUBMIT
+function handleSubmit(e){
+  e.preventDefault();
+  const b=e.target.querySelector('.sub-btn'),m=document.getElementById('succMsg');
+  b.textContent=lang==='es'?'✓ ¡ESTÁS DENTRO!':'✓ YOU\'RE IN!';
+  b.style.background='#27AE60';m.style.display='block';
+  setTimeout(()=>{
+    b.textContent=lang==='es'?'ÚNETE A PROJOBS360 — GRATIS →':'JOIN PROJOBS360 — FREE →';
+    b.style.background='';m.style.display='none';e.target.reset();
+  },4000);
+}
+
+// SMOOTH SCROLL TO SIGNUP + FOCUS
+document.querySelectorAll('.cta-work,.cta-hire').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    e.preventDefault();
+    const role=this.classList.contains('cta-work')?'worker':'contractor';
+    preselectRole(role);
+    document.getElementById('signup').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
