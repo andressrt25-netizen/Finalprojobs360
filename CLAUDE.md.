@@ -1,0 +1,47 @@
+# CLAUDE.md — ProJobs360
+
+## 1. The Tech Stack
+- Single-file HTML — no frameworks, no build tools, no npm
+- Vanilla JavaScript only — no React, no Vue, no jQuery
+- CSS custom properties (--o, --w, --s1, etc.) for the design system
+- Google Fonts: Bebas Neue, DM Sans, Space Mono
+- Deployed on Cloudflare Workers — worker named floral-frost-b485
+- Custom domain: projobs360.com routed through Cloudflare
+- Form backend: Formspree (not yet connected — YOUR_FORM_ID placeholder in JS)
+- No external JS libraries — all animations are pure CSS keyframes + vanilla JS
+
+## 2. Current Progress
+**Finished:**
+- Full hero with kinetic typography + curly red arrows + two CTA buttons
+- Auto-scrolling ticker bars (hero sdpay + HOW IT WORKS label)
+- Interactive stat modals (FREE, SAME DAY, 360°, ZERO MIDDLEMEN)
+- Auto-advancing How It Works steps with progress bar
+- SAME DAY PAID typographic roadmap section
+- No Exploitation trust grid with 3D tilt hover
+- Testimonials with illustrated SVG avatars
+- Phone demo mockup section
+- Investor section with market stats + team cards
+- Signup form with role preselection + Formspree-ready
+- Full mobile hamburger menu
+- Parallax scroll engine + cursor glow
+- Bilingual EN/ES toggle
+- Full SEO + Open Graph meta tags
+
+**Not yet connected / broken:**
+- Formspree form ID not replaced yet — form shows success but doesn't email you
+- og-image.jpg doesn't exist yet — social share preview has no image
+- No real backend — no database, no SMS sending, no actual worker/contractor matching
+
+## 3. The Rules
+**Formatting:**
+- Always deliver code as a single complete HTML file — never split into separate CSS/JS files
+- When working mobile, deliver edits in sections using str_replace — not full file rewrites
+- CSS goes inside <style> in the <head>, JS goes in a <script> block before </body>
+- Use CSS variables for all colors — never hardcode colors outside the :root block
+
+**Bugs we've already fixed — don't repeat:**
+- Don't stack trade icons using position:absolute — they overlap; use flexbox side-by-side instead
+- Don't use display:block on .pay-big spans — use display:flex; flex-wrap:wrap for inline layout
+- Don't link nav items to /vision, /platform, /investors — those pages don't exist; use anchor links (#section) only
+- Don't use localStorage or sessionStorage in artifacts — not supported in Claude.ai environment
+- Ticker animation must duplicate slides in JS for seamless loop — don't rely on CSS alone
