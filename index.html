@@ -1,149 +1,987 @@
-<!DOCTYPE html>
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  if (url.pathname === "/worker-dashboard") {
+    const whtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ProJobs360 – Live Jobs</title>
-
+<title>Find Work Today - ProJobs360</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>
 <style>
-:root{
-  --bg:#000; --o:#FF6A28; --w:#fff; --w3:#ccc;
-}
+:root{--o:#FF6A28;--o2:#E55A1A;--g:#1a9e5c;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;}
+body{background:#000;color:#fff;font-family:'DM Sans',sans-serif;}
+nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.97);padding:.9rem 5%;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--o);}
+.back-btn{background:var(--o);color:#fff;padding:.55rem 1.2rem;border-radius:6px;font-weight:700;text-decoration:none;font-size:.85rem;min-height:44px;display:inline-flex;align-items:center;}
+.header{padding:2rem 5% 1.2rem;background:linear-gradient(135deg,#000,#1a1a1a);text-align:center;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3rem);margin-bottom:.4rem;}
+.header p{color:#bbb;font-size:.92rem;}
+.tabs{display:flex;border-bottom:1px solid #1e1e1e;padding:0 5%;overflow-x:auto;}
+.tab{padding:.85rem 1.2rem;font-weight:500;color:#666;border-bottom:3px solid transparent;cursor:pointer;font-size:.85rem;white-space:nowrap;transition:.2s;}
+.tab.active{color:var(--o);border-color:var(--o);}
+.tab-pane{display:none;padding:1.5rem 5%;min-height:50vh;}
+.tab-pane.active{display:block;}
+.jb-search{width:100%;max-width:460px;margin:0 auto 1rem;display:block;padding:.8rem 1rem;border:1px solid #2a2a2a;border-radius:8px;background:#111;color:#fff;font-size:.88rem;outline:none;}
+.jb-search::placeholder{color:#444;}
+.jb-search:focus{border-color:var(--o);}
+.filter-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;}
+.fbtn{background:#111;border:1px solid #222;color:#666;padding:.3rem .85rem;border-radius:20px;font-size:.72rem;cursor:pointer;transition:.2s;}
+.fbtn.active,.fbtn:hover{background:var(--o);border-color:var(--o);color:#fff;}
+.board-stats{display:flex;gap:1px;background:#1a1a1a;border-radius:7px;overflow:hidden;margin-bottom:1.2rem;}
+.bstat{background:#111;padding:.7rem 1rem;flex:1;text-align:center;}
+.bstat-n{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--o);line-height:1;}
+.bstat-l{font-size:.58rem;color:#444;letter-spacing:.1em;text-transform:uppercase;margin-top:.1rem;}
+.job-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.job-card{background:#111;padding:1.4rem;border-radius:10px;border:1px solid #1e1e1e;position:relative;overflow:hidden;transition:.2s;}
+.job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--o);}
+.job-card:hover{border-color:rgba(255,106,40,.45);transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,96,32,.12);}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.65rem;}
+.badge-live{display:inline-flex;align-items:center;gap:.3rem;background:rgba(255,106,40,.12);border:1px solid rgba(255,106,40,.22);color:var(--o);font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.badge-dot{width:4px;height:4px;background:var(--o);border-radius:50%;animation:blink 1.8s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.badge-hot{display:inline-flex;align-items:center;gap:.3rem;background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.25);color:#ff6b6b;font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.badge-spots{display:inline-flex;align-items:center;gap:.3rem;background:rgba(26,158,92,.12);border:1px solid rgba(26,158,92,.25);color:var(--g);font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.pay-pill{background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;font-size:.75rem;font-weight:700;padding:.22rem .7rem;border-radius:20px;}
+.jc-title{font-size:.98rem;font-weight:700;margin-bottom:.28rem;line-height:1.3;}
+.jc-meta{color:#bbb;font-size:.78rem;margin-bottom:.4rem;}
+.jc-desc{color:#666;font-size:.78rem;line-height:1.6;margin-bottom:.8rem;}
+.jc-tags{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap;}
+.jc-tag{background:#1a1a1a;padding:.18rem .6rem;border-radius:20px;font-size:.7rem;color:#777;}
+.countdown{font-size:.7rem;color:#ffc800;margin-bottom:.8rem;display:flex;align-items:center;gap:.35rem;}
+.card-btns{display:flex;gap:.5rem;}
+.apply-btn{flex:1;background:var(--o);color:#fff;padding:.82rem 0;font-family:'Bebas Neue',sans-serif;font-size:.88rem;letter-spacing:.5px;border-radius:6px;border:none;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.apply-btn:hover{background:var(--o2);}
+.view-btn{background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;padding:.82rem 1rem;font-size:.75rem;border-radius:6px;cursor:pointer;white-space:nowrap;min-height:48px;display:flex;align-items:center;transition:.2s;}
+.view-btn:hover{border-color:var(--o);color:#fff;}
+.full-listing{display:none;background:#000;border-top:2px solid var(--o);margin-top:1.5rem;}
+.full-listing.show{display:block;}
+.fl-inner{max-width:740px;margin:0 auto;padding:2rem 0;}
+.fl-back{display:inline-flex;align-items:center;gap:.5rem;color:var(--o);font-size:.8rem;cursor:pointer;margin-bottom:1.4rem;border:none;background:none;}
+.fl-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;flex-wrap:wrap;gap:1rem;}
+.fl-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.5rem);margin-bottom:.35rem;}
+.fl-company{color:#aaa;font-size:.85rem;margin-bottom:.3rem;}
+.fl-meta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.4rem;}
+.fl-meta-pill{display:inline-flex;align-items:center;gap:.35rem;background:#111;border:1px solid #222;color:#aaa;font-size:.7rem;padding:.22rem .65rem;border-radius:20px;}
+.fl-pay{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--o);line-height:1;}
+.fl-pay-label{font-size:.62rem;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;text-align:right;}
+.fl-section{margin-bottom:1.4rem;}
+.fl-section-title{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:#fff;margin-bottom:.6rem;padding-bottom:.35rem;border-bottom:1px solid #1a1a1a;}
+.fl-section p{font-size:.83rem;color:#aaa;line-height:1.75;}
+.fl-list{list-style:none;display:flex;flex-direction:column;gap:.38rem;}
+.fl-list li{display:flex;align-items:flex-start;gap:.55rem;font-size:.82rem;color:#aaa;line-height:1.5;}
+.fl-check{width:15px;height:15px;border-radius:3px;background:var(--o);display:flex;align-items:center;justify-content:center;font-size:.58rem;color:#fff;flex-shrink:0;margin-top:1px;}
+.fl-tags{display:flex;gap:.45rem;flex-wrap:wrap;}
+.fl-tag{background:#111;border:1px solid #222;color:#aaa;padding:.28rem .75rem;border-radius:20px;font-size:.75rem;}
+.fl-cta-box{background:#111;border:1px solid rgba(255,106,40,.25);border-radius:10px;padding:1.4rem;margin-top:1.4rem;}
+.fl-cta-title{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;margin-bottom:.4rem;}
+.fl-cta-sub{font-size:.78rem;color:#555;margin-bottom:.9rem;line-height:1.6;}
+.fl-form{display:flex;flex-direction:column;gap:.6rem;}
+.fl-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.fl-input{background:#0a0a0a;border:1px solid #2a2a2a;border-radius:5px;color:#fff;font-size:.83rem;padding:.62rem .85rem;width:100%;outline:none;}
+.fl-input::placeholder{color:#444;}
+.fl-input:focus{border-color:var(--o);}
+.fl-submit{background:var(--o);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.1em;padding:.85rem;border-radius:6px;border:none;cursor:pointer;width:100%;min-height:52px;}
+.fl-submit:hover{background:var(--o2);}
+.fl-guarantee{display:flex;align-items:center;gap:.45rem;margin-top:.6rem;justify-content:center;}
+.fl-g-dot{width:7px;height:7px;background:var(--g);border-radius:50%;flex-shrink:0;}
+.fl-guarantee span{font-size:.68rem;color:var(--g);}
+.empty-state{padding:3rem 2rem;text-align:center;color:#555;}
+.empty-state h3{font-size:1.1rem;margin-bottom:.6rem;color:#888;}
+.loading-state{padding:3rem;text-align:center;color:#666;display:flex;flex-direction:column;align-items:center;gap:.8rem;}
+.spinner{width:32px;height:32px;border:3px solid #1a1a1a;border-top-color:var(--o);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sticky-bottom{background:rgba(0,0,0,.97);padding:.8rem 5%;border-top:1px solid #1e1e1e;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.sb-text{color:#555;font-size:.8rem;flex:1;}
+.sb-apply{background:var(--o);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:.92rem;letter-spacing:.08em;padding:.65rem 1.5rem;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;min-height:44px;}
+.sb-apply:hover{background:var(--o2);}
+.succ-msg{background:rgba(26,158,92,.1);border:1px solid rgba(26,158,92,.25);color:var(--g);border-radius:6px;padding:.85rem;font-size:.82rem;display:none;text-align:center;margin-top:.45rem;}
+@media(max-width:600px){.fl-row{grid-template-columns:1fr;}.job-grid{grid-template-columns:1fr;}.card-btns{flex-direction:column;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">ProJobs360</div>
+  <a href="/" class="back-btn">← Back to Home</a>
+</nav>
+<div class="header">
+  <h1>All Available Jobs</h1>
+  <p>Fort Worth & Riverside · Updated live · Apply in 90 seconds</p>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('jobs',this)">Ready Go Jobs</div>
+  <div class="tab" onclick="switchTab('myapps',this)">My Applications</div>
+  <div class="tab" onclick="switchTab('profile',this)">My Profile</div>
+</div>
+<div class="tab-pane active" id="tab-jobs">
+  <input type="text" class="jb-search" placeholder="Search trade, city, or skills..." oninput="filterJobs(this.value)"/>
+  <div class="filter-row">
+    <button class="fbtn active" onclick="setFilter('all',this)">All Trades</button>
+    <button class="fbtn" onclick="setFilter('carpentry',this)">Carpentry</button>
+    <button class="fbtn" onclick="setFilter('concrete',this)">Concrete</button>
+    <button class="fbtn" onclick="setFilter('electrical',this)">Electrical</button>
+    <button class="fbtn" onclick="setFilter('roofing',this)">Roofing</button>
+    <button class="fbtn" onclick="setFilter('general',this)">General Labor</button>
+  </div>
+  <div class="board-stats">
+    <div class="bstat"><div class="bstat-n" id="jobCount">...</div><div class="bstat-l">Jobs Live</div></div>
+    <div class="bstat"><div class="bstat-n">Same Day</div><div class="bstat-l">Guaranteed Pay</div></div>
+    <div class="bstat"><div class="bstat-n">$0</div><div class="bstat-l">Worker Fees</div></div>
+    <div class="bstat"><div class="bstat-n">2 Cities</div><div class="bstat-l">Coverage</div></div>
+  </div>
+  <div class="job-grid" id="jobGrid">
+    <div class="loading-state"><div class="spinner"></div><span>Loading fresh jobs near you...</span></div>
+  </div>
+  <div class="full-listing" id="fullListing">
+    <div class="fl-inner">
+      <button class="fl-back" onclick="closeListing()">← Back to all jobs</button>
+      <div class="fl-header">
+        <div>
+          <div class="fl-title" id="fl-title"></div>
+          <div class="fl-company" id="fl-company"></div>
+          <div class="fl-meta-row">
+            <div class="fl-meta-pill" id="fl-location"></div>
+            <div class="fl-meta-pill" id="fl-posted"></div>
+            <div class="fl-meta-pill">✅ Verified Contractor</div>
+          </div>
+        </div>
+        <div>
+          <div class="fl-pay" id="fl-pay"></div>
+          <div class="fl-pay-label">Per Day · Same Day Pay</div>
+        </div>
+      </div>
+      <div class="fl-section">
+        <div class="fl-section-title">About This Job</div>
+        <p id="fl-desc"></p>
+      </div>
+      <div class="fl-section">
+        <div class="fl-section-title">Skills Needed</div>
+        <div class="fl-tags" id="fl-tags"></div>
+      </div>
+      <div class="fl-cta-box">
+        <div class="fl-cta-title">Apply Now — Takes 90 Seconds</div>
+        <div class="fl-cta-sub">No resume needed. Name and phone only. Get confirmed same day.</div>
+        <div class="fl-form">
+          <div class="fl-row">
+            <input class="fl-input" type="text" id="app-first" placeholder="First name"/>
+            <input class="fl-input" type="text" id="app-last" placeholder="Last name"/>
+          </div>
+          <input class="fl-input" type="tel" id="app-phone" placeholder="Phone — we'll text you confirmation"/>
+          <input class="fl-input" type="text" id="app-city" placeholder="Your city"/>
+          <input class="fl-input" type="text" id="app-exp" placeholder="Years of experience in this trade"/>
+          <button class="fl-submit" onclick="submitApplication()">APPLY FOR THIS JOB — SAME DAY PAY</button>
+          <div class="succ-msg" id="applySucc">✅ Application sent! You'll get a text confirmation shortly.</div>
+          <div class="fl-guarantee"><span class="fl-g-dot"></span><span>Same-day pay guaranteed · Free to apply · No hidden fees ever</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-pane" id="tab-myapps">
+  <div class="empty-state"><h3>No applications yet</h3><p>Apply to a job above and track it here.</p></div>
+</div>
+<div class="tab-pane" id="tab-profile">
+  <div class="empty-state"><h3>Complete your profile</h3><p>Workers with full profiles get 3x more matches.</p></div>
+</div>
+<div class="sticky-bottom">
+  <span class="sb-text">Ready to work today? Same-day pay on every job.</span>
+  <button class="sb-apply" onclick="document.getElementById('tab-jobs').scrollIntoView({behavior:'smooth'})">GET HIRED IN 90 SECONDS</button>
+</div>
+<script>
+const SUPABASE_URL='https://kzzbdkdpbxnyilqbhusb.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6emJka2RwYnhueWlscWJodXNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDM5NzYsImV4cCI6MjA5MjkxOTk3Nn0.RGupeSrrhMUXsTEUX_g7IqOjI-80u2ZF1k_J0Mzhvic';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let allJobs=[],activeFilter='all',searchQ='',currentJobId=null;
 
-/* HERO */
-#hero{
-  min-height:80vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:4rem 5%;
-  position:relative;
+async function loadJobs(){
+  const grid=document.getElementById('jobGrid');
+  grid.innerHTML='<div class="loading-state"><div class="spinner"></div><span>Loading fresh jobs near you...</span></div>';
+  const{data,error}=await sb.from('jobs').select('*').eq('status','open').order('created_at',{ascending:false});
+  if(error||!data?.length){
+    grid.innerHTML='<div class="empty-state"><h3>No jobs right now</h3><p>Check back soon — contractors post daily.</p></div>';
+    document.getElementById('jobCount').textContent='0';
+    return;
+  }
+  allJobs=data;
+  renderJobs();
 }
-#hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url("https://images.unsplash.com/photo-1503387762-592deb58ef4e") center/cover no-repeat;
-  opacity:0.12;
+
+function renderJobs(){
+  const grid=document.getElementById('jobGrid');
+  const filtered=allJobs.filter(j=>{
+    const mf=activeFilter==='all'||(j.category&&j.category.toLowerCase()===activeFilter);
+    const q=searchQ.toLowerCase();
+    const ms=!q||j.title.toLowerCase().includes(q)||j.location.toLowerCase().includes(q)||(j.skills&&j.skills.some(s=>s.toLowerCase().includes(q)));
+    return mf&&ms;
+  });
+  document.getElementById('jobCount').textContent=filtered.length;
+  if(!filtered.length){grid.innerHTML='<div class="empty-state"><h3>No matching jobs</h3><p>Try a different trade or check back soon.</p></div>';return;}
+  const minsAgo=ts=>Math.floor((Date.now()-new Date(ts))/60000);
+  grid.innerHTML=filtered.map((j,idx)=>{
+    const mins=minsAgo(j.created_at);
+    const timeStr=mins<60?mins+' mins ago':Math.floor(mins/60)+' hrs ago';
+    const skills=j.skills?j.skills.slice(0,3):[];
+    const isHot=idx===0;
+    const spotsLeft=idx===1;
+    const cdMins=47-(idx*11);
+    return \`<div class="job-card">
+      <div class="card-top">
+        <div style="display:flex;gap:.35rem;flex-wrap:wrap;">
+          <span class="badge-live"><span class="badge-dot"></span>LIVE NOW</span>
+          \${isHot?'<span class="badge-hot">🔥 HOT JOB</span>':''}
+          \${spotsLeft?'<span class="badge-spots">✅ 2 SPOTS LEFT</span>':''}
+        </div>
+        <span class="pay-pill">\$\${j.pay}/day</span>
+      </div>
+      <div class="jc-title">\${j.title}</div>
+      <div class="jc-meta">📍 \${j.location} · 🕐 \${timeStr}</div>
+      <div class="jc-desc">\${j.description.length>100?j.description.slice(0,100)+'...':j.description}</div>
+      \${skills.length?'<div class="jc-tags">'+skills.map(s=>'<span class="jc-tag">'+s+'</span>').join('')+'</div>':''}
+      \${isHot?'<div class="countdown">⏱ <span id="cd-\${j.id}">Filling in \${cdMins}:00</span></div>':''}
+      <div class="card-btns">
+        <button class="apply-btn" onclick="openListing('\${j.id}')">APPLY NOW</button>
+        <button class="view-btn" onclick="openListing('\${j.id}')">Full listing →</button>
+      </div>
+    </div>\`;
+  }).join('');
+  filtered.forEach((j,idx)=>{if(idx===0)startCountdown(j.id,47-(idx*11));});
 }
-.hcontent{position:relative;z-index:2;}
-h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3rem,8vw,5rem);
+
+function startCountdown(jobId,mins){
+  let secs=mins*60;
+  const el=document.getElementById('cd-'+jobId);
+  if(!el)return;
+  const iv=setInterval(()=>{
+    secs--;
+    if(secs<=0){clearInterval(iv);el.textContent='Filling now!';return;}
+    const m=Math.floor(secs/60),s=secs%60;
+    el.textContent='Filling in '+m+':'+(s<10?'0':'')+s;
+  },1000);
 }
+
+function filterJobs(q){searchQ=q;renderJobs();}
+function setFilter(cat,btn){
+  activeFilter=cat;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderJobs();
+}
+function switchTab(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function openListing(id){
+  const j=allJobs.find(x=>x.id===id);
+  if(!j)return;
+  currentJobId=id;
+  const mins=Math.floor((Date.now()-new Date(j.created_at))/60000);
+  const timeStr=mins<60?mins+' mins ago':Math.floor(mins/60)+' hrs ago';
+  document.getElementById('fl-title').textContent=j.title;
+  document.getElementById('fl-company').textContent='Posted by Verified Contractor · '+j.location;
+  document.getElementById('fl-location').textContent='📍 '+j.location;
+  document.getElementById('fl-posted').textContent='🕐 Posted '+timeStr;
+  document.getElementById('fl-pay').textContent='\$'+j.pay;
+  document.getElementById('fl-desc').textContent=j.description;
+  document.getElementById('fl-tags').innerHTML=j.skills?j.skills.map(s=>'<span class="fl-tag">'+s+'</span>').join(''):'';
+  document.getElementById('applySucc').style.display='none';
+  const fl=document.getElementById('fullListing');
+  fl.classList.add('show');
+  fl.scrollIntoView({behavior:'smooth'});
+}
+
+function closeListing(){
+  document.getElementById('fullListing').classList.remove('show');
+  document.getElementById('jobGrid').scrollIntoView({behavior:'smooth'});
+}
+
+async function submitApplication(){
+  const first=document.getElementById('app-first').value.trim();
+  const phone=document.getElementById('app-phone').value.trim();
+  if(!first||!phone){alert('Please enter your name and phone number.');return;}
+  const btn=document.querySelector('.fl-submit');
+  btn.textContent='SENDING...';btn.style.background='#444';
+  const{error}=await sb.from('applications').insert([{
+    job_id:currentJobId,
+    first_name:first,
+    last_name:document.getElementById('app-last').value.trim(),
+    phone,
+    city:document.getElementById('app-city').value.trim(),
+    experience:document.getElementById('app-exp').value.trim(),
+    applied_at:new Date().toISOString()
+  }]);
+  if(error){
+    btn.textContent='APPLY FOR THIS JOB — SAME DAY PAY';btn.style.background='';
+    alert('Something went wrong. Please try again.');return;
+  }
+  btn.textContent='✓ APPLIED!';btn.style.background='#1a9e5c';
+  document.getElementById('applySucc').style.display='block';
+  setTimeout(()=>{btn.textContent='APPLY FOR THIS JOB — SAME DAY PAY';btn.style.background='';},5000);
+}
+loadJobs();
+<\/script>
+</body>
+</html>`;
+    return new Response(whtml,{headers:{"Content-Type":"text/html;charset=UTF-8"}});
+  }
+
+  if (url.pathname === "/contractor-dashboard") {
+    const chtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Find Workers Fast - ProJobs360</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>
+<style>
+:root{--o:#FF6A28;--o2:#E55A1A;--g:#1a9e5c;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#000;color:#fff;font-family:'DM Sans',sans-serif;}
+nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.97);padding:.9rem 5%;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--o);}
+.back-btn{background:var(--o);color:#fff;padding:.55rem 1.2rem;border-radius:6px;font-weight:700;text-decoration:none;font-size:.85rem;min-height:44px;display:inline-flex;align-items:center;}
+.header{padding:2rem 5% 1.2rem;background:linear-gradient(135deg,#000,#1a1a1a);text-align:center;}
+.header h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3rem);margin-bottom:.4rem;}
+.header p{color:#bbb;font-size:.92rem;}
+.body{padding:2rem 5%;max-width:620px;}
+.perks{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
+.perk{display:flex;align-items:center;gap:.7rem;font-size:.85rem;color:#ccc;}
+.perk-dot{width:18px;height:18px;border-radius:3px;background:var(--o);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#fff;flex-shrink:0;}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:.4rem;}
+.form-sub{font-size:.82rem;color:#555;margin-bottom:1.1rem;line-height:1.6;}
+.cp-form{display:flex;flex-direction:column;gap:.65rem;}
+.cp-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+.cp-input{background:#111;border:1px solid #222;border-radius:5px;color:#fff;font-size:.85rem;padding:.65rem .9rem;width:100%;outline:none;}
+.cp-input::placeholder{color:#444;}
+.cp-input:focus{border-color:var(--o);}
+.cp-select{background:#111;border:1px solid #222;border-radius:5px;color:#fff;font-size:.85rem;padding:.65rem .9rem;width:100%;outline:none;}
+.cp-submit{background:var(--o);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;padding:.9rem;border-radius:6px;border:none;cursor:pointer;width:100%;min-height:52px;margin-top:.3rem;}
+.cp-submit:hover{background:var(--o2);}
+.succ-msg{background:rgba(26,158,92,.1);border:1px solid rgba(26,158,92,.25);color:var(--g);border-radius:6px;padding:.85rem;font-size:.82rem;display:none;text-align:center;margin-top:.45rem;}
+@media(max-width:600px){.cp-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">ProJobs360</div>
+  <a href="/" class="back-btn">← Back to Home</a>
+</nav>
+<div class="header">
+  <h1>Find Workers Fast</h1>
+  <p>Post a job · Workers alerted instantly · Hire same day</p>
+</div>
+<div class="body">
+  <div class="perks">
+    <div class="perk"><div class="perk-dot">✓</div>Verified workers only — no no-shows</div>
+    <div class="perk"><div class="perk-dot">✓</div>Post a job in under 2 minutes</div>
+    <div class="perk"><div class="perk-dot">✓</div>Workers alerted instantly by SMS</div>
+    <div class="perk"><div class="perk-dot">✓</div>Pay through platform — no cash or checks</div>
+    <div class="perk"><div class="perk-dot">✓</div>Dispute protection on every job</div>
+  </div>
+  <div class="form-title">Post Your Job</div>
+  <div class="form-sub">Fill in the details — workers near you get notified immediately.</div>
+  <div class="cp-form">
+    <div class="cp-row">
+      <input class="cp-input" type="text" id="c-name" placeholder="Your name"/>
+      <input class="cp-input" type="tel" id="c-phone" placeholder="Your phone"/>
+    </div>
+    <input class="cp-input" type="email" id="c-email" placeholder="Email address"/>
+    <select class="cp-select" id="c-trade">
+      <option value="" disabled selected>Trade needed</option>
+      <option>Framing Carpenter</option><option>Concrete Worker</option>
+      <option>Electrician Helper</option><option>Roofer / Roofing Laborer</option>
+      <option>Drywall Installer</option><option>General Laborer</option>
+      <option>Painter / Paint Prep</option><option>Mason / Mason Tender</option>
+      <option>Plumber Helper</option><option>Landscaper</option><option>Other</option>
+    </select>
+    <input class="cp-input" type="text" id="c-location" placeholder="Job location / address"/>
+    <div class="cp-row">
+      <input class="cp-input" type="text" id="c-pay" placeholder="Daily rate (e.g. $280)"/>
+      <input class="cp-input" type="text" id="c-days" placeholder="# of days needed"/>
+    </div>
+    <textarea class="cp-input" id="c-desc" rows="3" placeholder="Brief job description"></textarea>
+    <button class="cp-submit" onclick="postJob()">POST JOB — WORKERS NOTIFIED INSTANTLY</button>
+    <div class="succ-msg" id="postSucc">✅ Job posted! Workers in your area are being notified now.</div>
+  </div>
+</div>
+<script>
+const SUPABASE_URL='https://kzzbdkdpbxnyilqbhusb.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6emJka2RwYnhueWlscWJodXNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDM5NzYsImV4cCI6MjA5MjkxOTk3Nn0.RGupeSrrhMUXsTEUX_g7IqOjI-80u2ZF1k_J0Mzhvic';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+async function postJob(){
+  const name=document.getElementById('c-name').value.trim();
+  const phone=document.getElementById('c-phone').value.trim();
+  const trade=document.getElementById('c-trade').value;
+  const location=document.getElementById('c-location').value.trim();
+  if(!name||!phone||!trade||!location){alert('Please fill in name, phone, trade, and location.');return;}
+  const btn=document.querySelector('.cp-submit');
+  btn.textContent='POSTING...';btn.style.background='#444';
+  const{error}=await sb.from('jobs').insert([{
+    title:trade,location,
+    pay:document.getElementById('c-pay').value.replace(/[^0-9]/g,''),
+    description:document.getElementById('c-desc').value.trim(),
+    status:'open',
+    contractor_name:name,contractor_phone:phone,
+    contractor_email:document.getElementById('c-email').value.trim(),
+    days_needed:document.getElementById('c-days').value.trim(),
+    created_at:new Date().toISOString()
+  }]);
+  if(error){btn.textContent='POST JOB — WORKERS NOTIFIED INSTANTLY';btn.style.background='';alert('Something went wrong. Please try again.');return;}
+  btn.textContent='✓ JOB POSTED!';btn.style.background='#1a9e5c';
+  document.getElementById('postSucc').style.display='block';
+  setTimeout(()=>{btn.textContent='POST JOB — WORKERS NOTIFIED INSTANTLY';btn.style.background='';},6000);
+}
+<\/script>
+</body>
+</html>`;
+    return new Response(chtml,{headers:{"Content-Type":"text/html;charset=UTF-8"}});
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ProJobs360 – Find Work. Get Paid Today. | Fort Worth & Riverside</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>
+<style>
+:root{--o:#FF6A28;--o2:#E55A1A;--g:#1a9e5c;--g2:#158a4e;--s1:#0a0a0a;--s2:#111;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#000;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;overflow-x:hidden;}
+
+nav{position:sticky;top:0;z-index:1000;padding:.9rem 5%;background:rgba(0,0,0,.97);border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--o);}
+.nav-right{display:flex;align-items:center;gap:1.2rem;}
+.menu{display:flex;gap:1.6rem;align-items:center;list-style:none;}
+.menu a{color:#bbb;font-size:.85rem;text-decoration:none;font-weight:500;letter-spacing:.4px;transition:color .2s;}
+.menu a:hover{color:var(--o);}
+.cta-nav{background:var(--o);color:#000 !important;padding:.5rem 1.2rem;border-radius:6px;font-weight:700;font-size:.85rem;min-height:40px;display:inline-flex;align-items:center;}
+.lang-tog{display:flex;border:1px solid rgba(255,255,255,.15);border-radius:4px;overflow:hidden;}
+.ltb{background:none;border:none;color:#888;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:.3rem .65rem;cursor:pointer;transition:.2s;}
+.ltb.on{background:var(--o);color:#fff;}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;padding:6px;background:none;border:none;}
+.hamburger span{width:22px;height:2px;background:var(--o);border-radius:2px;display:block;}
+@media(max-width:768px){
+  .hamburger{display:flex;}
+  .menu{display:none;flex-direction:column;gap:1.2rem;padding:1.5rem 5%;position:absolute;top:100%;left:0;right:0;background:rgba(0,0,0,.98);border-bottom:1px solid #1a1a1a;}
+  .menu.open{display:flex;}
+}
+
+#hero{min-height:86vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 5% 3rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400") center/cover;opacity:.1;}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(255,106,40,.1) 0%,transparent 70%);pointer-events:none;}
+.hcontent{position:relative;z-index:2;max-width:780px;width:100%;}
+.live-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,106,40,.1);border:1px solid rgba(255,106,40,.25);color:var(--o);font-size:.63rem;letter-spacing:.14em;padding:.38rem 1rem;border-radius:100px;margin-bottom:1.2rem;}
+.lp-dot{width:6px;height:6px;background:var(--o);border-radius:50%;animation:blink 1.8s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.4);}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,9vw,6.5rem);line-height:.96;letter-spacing:1px;margin-bottom:.9rem;}
 .h1b{color:var(--o);}
-.hsub{color:var(--w3);margin-top:1rem;}
+.hero-sub{color:#bbb;font-size:1rem;margin:.6rem auto;line-height:1.8;max-width:560px;}
+.hero-sub-es{color:#555;font-size:.85rem;font-style:italic;margin-bottom:.5rem;}
+.lang-proof{display:inline-flex;align-items:center;gap:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.35rem 1rem;border-radius:100px;margin-bottom:1.4rem;font-size:.75rem;color:#888;letter-spacing:.08em;}
+.lang-divider{width:1px;height:12px;background:rgba(255,255,255,.15);}
 
-/* JOBS */
-#jobs{padding:4rem 5%;background:#0a0a0a;}
-.jobs-container{max-width:1000px;margin:auto;text-align:center;}
-.job-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:1.5rem;
-  margin-top:2rem;
-}
-.job-card{
-  background:#111;
-  padding:1.5rem;
-  border-radius:8px;
-  border:1px solid #222;
-}
-.job-meta{color:var(--w3);font-size:0.9rem;}
-.job-time{color:#888;font-size:0.8rem;}
-.apply-btn{
-  display:inline-block;
-  margin-top:1rem;
-  background:var(--o);
-  padding:0.6rem 1.2rem;
-  color:#fff;
-  text-decoration:none;
-}
+.hero-quote{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--o);border-radius:0 6px 6px 0;padding:.85rem 1.1rem;margin:0 auto 1.8rem;max-width:520px;text-align:left;display:flex;align-items:flex-start;gap:.8rem;}
+.hq-av{width:34px;height:34px;border-radius:5px;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;}
+.hq-stars{display:flex;gap:2px;margin-bottom:.22rem;}
+.hq-star{width:9px;height:9px;background:var(--o);border-radius:1px;}
+.hq-text{font-size:.8rem;color:#ddd;line-height:1.6;font-style:italic;}
+.hq-name{font-size:.68rem;color:#666;margin-top:.22rem;}
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:2rem;
-  color:#777;
+.btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.7rem;}
+.btn-wrap{display:flex;flex-direction:column;align-items:center;}
+.btn-primary{background:var(--g);color:#fff;padding:1rem 2.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:.8px;min-height:52px;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none;animation:glowGreen 2.5s infinite;transition:background .2s;}
+@keyframes glowGreen{0%,100%{box-shadow:0 0 22px rgba(26,158,92,.45);}50%{box-shadow:0 0 44px rgba(26,158,92,.75);}}
+.btn-primary:hover{background:var(--g2);animation:none;}
+.btn-outline{background:transparent;color:#fff;padding:1rem 2.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;font-weight:700;border:2px solid #fff;border-radius:8px;text-decoration:none;letter-spacing:.8px;min-height:52px;display:inline-flex;align-items:center;gap:.6rem;box-shadow:0 0 24px rgba(255,255,255,.1);transition:.2s;}
+.btn-outline:hover{background:#fff;color:#000;}
+.btn-sublabel{font-size:.6rem;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem;}
+.btn-sublabel-es{font-size:.57rem;color:#444;font-style:italic;margin-top:.1rem;}
+.no-signup{font-size:.65rem;color:var(--g);margin-top:.26rem;display:flex;align-items:center;gap:.3rem;}
+.ns-dot{width:5px;height:5px;background:var(--g);border-radius:50%;flex-shrink:0;}
+
+.urgency-row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:.65rem auto 0;}
+.upill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#bbb;font-size:.64rem;letter-spacing:.06em;padding:.28rem .82rem;border-radius:100px;}
+.udot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.udot.o{background:var(--o);}.udot.g{background:var(--g);}.udot.w{background:#fff;}
+
+.stats{display:flex;justify-content:center;background:rgba(10,10,10,.95);flex-wrap:wrap;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;}
+.stat{text-align:center;flex:1;min-width:140px;padding:1.4rem 1rem;border-right:1px solid #1a1a1a;}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--o);margin-bottom:.2rem;line-height:1;}
+.stat-lbl strong{display:block;font-size:.82rem;color:#ccc;margin-bottom:.15rem;}
+.stat-lbl span{font-size:.72rem;color:#555;}
+
+.trust-bar{background:rgba(255,106,40,.07);border-top:1px solid rgba(255,106,40,.12);border-bottom:1px solid rgba(255,106,40,.12);padding:.85rem 5%;display:flex;align-items:center;justify-content:center;gap:2.2rem;flex-wrap:wrap;}
+.tb-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:#bbb;}
+
+.job-preview{padding:4rem 5%;background:var(--s1);}
+.section-head{text-align:center;margin-bottom:2rem;}
+.section-eyebrow{font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--o);margin-bottom:.6rem;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.section-eyebrow::before,.section-eyebrow::after{content:'';width:22px;height:1px;background:var(--o);display:inline-block;}
+.section-head h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);margin-bottom:.4rem;}
+.section-head p{color:#666;font-size:.88rem;}
+#jobGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.3rem;max-width:1200px;margin:0 auto 2rem;}
+.job-card{background:var(--s2);padding:1.5rem;border-radius:10px;border:1px solid #1e1e1e;transition:.2s;cursor:pointer;position:relative;overflow:hidden;}
+.job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--o);}
+.job-card:hover{box-shadow:0 14px 36px rgba(255,106,40,.14);border-color:rgba(255,106,40,.4);transform:translateY(-3px);}
+.card-badges{display:flex;gap:.45rem;margin-bottom:.7rem;flex-wrap:wrap;}
+.badge-live{display:inline-flex;align-items:center;gap:.3rem;background:rgba(255,106,40,.12);border:1px solid rgba(255,106,40,.22);color:var(--o);font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.badge-dot{width:4px;height:4px;background:var(--o);border-radius:50%;animation:blink 1.8s infinite;}
+.badge-hot{background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.25);color:#ff6b6b;font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.badge-spots{background:rgba(26,158,92,.12);border:1px solid rgba(26,158,92,.25);color:var(--g);font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.badge-urgent{background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.2);color:#ffc800;font-size:.56rem;letter-spacing:.1em;padding:.18rem .5rem;border-radius:100px;}
+.job-title{font-size:1.05rem;font-weight:700;margin-bottom:.3rem;line-height:1.3;}
+.job-meta{color:#bbb;font-size:.82rem;margin-bottom:.35rem;}
+.job-pay{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--o);margin-bottom:.45rem;}
+.job-desc{color:#666;font-size:.82rem;line-height:1.55;margin-bottom:.5rem;}
+.job-skills{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.6rem;}
+.job-skill{background:#1a1a1a;border:1px solid #2a2a2a;color:#777;padding:.18rem .6rem;border-radius:20px;font-size:.7rem;}
+.countdown{font-size:.7rem;color:#ffc800;margin-bottom:.8rem;display:flex;align-items:center;gap:.35rem;}
+.job-btns{display:flex;gap:.5rem;}
+.btn-apply{flex:1;background:var(--o);color:#fff;padding:.85rem 0;font-family:'Bebas Neue',sans-serif;font-size:.92rem;letter-spacing:.5px;border-radius:6px;text-align:center;border:none;cursor:pointer;min-height:48px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.btn-apply:hover{background:var(--o2);}
+.btn-view{background:#1a1a1a;border:1px solid #2a2a2a;color:#aaa;padding:.85rem 1rem;font-size:.78rem;border-radius:6px;cursor:pointer;white-space:nowrap;min-height:48px;display:flex;align-items:center;text-decoration:none;transition:.2s;}
+.btn-view:hover{border-color:var(--o);color:#fff;}
+.loading-jobs{padding:3rem;text-align:center;color:#666;display:flex;flex-direction:column;align-items:center;gap:.8rem;}
+.spinner{width:32px;height:32px;border:3px solid #1a1a1a;border-top-color:var(--o);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.view-all-wrap{text-align:center;}
+.btn-view-all{display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:1px solid var(--o);color:var(--o);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;padding:.78rem 2.2rem;border-radius:6px;text-decoration:none;transition:.2s;min-height:48px;}
+.btn-view-all:hover{background:var(--o);color:#fff;}
+
+.testimonials{padding:4rem 5%;background:#000;}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;margin-top:2rem;max-width:1000px;margin-left:auto;margin-right:auto;}
+.tc{background:var(--s2);padding:1.8rem;}
+.tc-stars{display:flex;gap:3px;margin-bottom:.9rem;}
+.tc-star{width:10px;height:10px;background:var(--o);border-radius:2px;}
+.tc-q{font-size:.85rem;color:#ddd;line-height:1.75;margin-bottom:1.2rem;font-style:italic;}
+.tc-auth{display:flex;align-items:center;gap:.75rem;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.07);}
+.tc-av{width:34px;height:34px;border-radius:6px;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;}
+.tc-name{font-size:.8rem;font-weight:700;color:#fff;}
+.tc-role{font-size:.7rem;color:#555;}
+
+.how-works{padding:4rem 5%;background:var(--s1);text-align:center;}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;max-width:1000px;margin:2rem auto 0;}
+.step{background:var(--s2);padding:1.8rem;border-radius:10px;border:1px solid #1e1e1e;transition:.2s;text-align:left;}
+.step:hover{box-shadow:0 16px 40px rgba(255,106,40,.1);border-color:rgba(255,106,40,.3);}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--o);margin-bottom:.8rem;display:block;line-height:1;}
+.step h3{font-size:1rem;margin:0 0 .6rem;font-weight:600;}
+.step p{color:#666;font-size:.82rem;line-height:1.6;}
+
+.wa-float{position:fixed;bottom:80px;right:20px;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.4);z-index:500;transition:.2s;}
+.wa-float:hover{transform:scale(1.1);}
+
+.sticky-bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.97);border-top:1px solid #1a1a1a;padding:.75rem 5%;display:flex;align-items:center;gap:1rem;z-index:400;transform:translateY(100%);transition:transform .3s ease;}
+.sticky-bottom.show{transform:translateY(0);}
+.sb-text{font-size:.82rem;color:#777;flex:1;}
+.sb-text strong{color:#fff;display:block;font-size:.88rem;}
+.sb-btn{background:var(--o);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;padding:.65rem 1.5rem;border-radius:6px;text-decoration:none;white-space:nowrap;min-height:44px;display:flex;align-items:center;border:none;cursor:pointer;}
+.sb-btn:hover{background:var(--o2);}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.show{display:flex;}
+.modal{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:12px;padding:2rem;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#555;font-size:1.3rem;cursor:pointer;line-height:1;}
+.modal-close:hover{color:#fff;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.3rem;}
+.modal-sub{font-size:.82rem;color:#555;margin-bottom:1.3rem;line-height:1.6;}
+.mform{display:flex;flex-direction:column;gap:.65rem;}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+.mi{background:#111;border:1px solid #222;border-radius:5px;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.7rem .95rem;width:100%;outline:none;}
+.mi::placeholder{color:#444;}
+.mi:focus{border-color:var(--o);}
+.ms{background:#111;border:1px solid #222;border-radius:5px;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.7rem .95rem;width:100%;outline:none;}
+.ms option{background:#111;}
+.mbtn{background:var(--o);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;padding:.88rem;border-radius:6px;border:none;cursor:pointer;width:100%;min-height:52px;margin-top:.3rem;transition:.2s;}
+.mbtn:hover{background:var(--o2);}
+.mguarantee{display:flex;align-items:center;gap:.45rem;margin-top:.6rem;justify-content:center;}
+.mg-dot{width:7px;height:7px;background:var(--g);border-radius:50%;flex-shrink:0;}
+.mguarantee span{font-size:.68rem;color:var(--g);}
+.msucc{background:rgba(26,158,92,.1);border:1px solid rgba(26,158,92,.25);color:var(--g);border-radius:6px;padding:.85rem;font-size:.85rem;display:none;text-align:center;margin-top:.4rem;}
+
+footer{text-align:center;padding:2.5rem 5%;color:#444;font-size:.78rem;background:#000;border-top:1px solid #111;}
+footer a{color:#555;text-decoration:none;}
+footer a:hover{color:var(--o);}
+
+@media(max-width:600px){
+  .btns{flex-direction:column;align-items:center;}
+  .btn-primary,.btn-outline{width:100%;max-width:320px;justify-content:center;font-size:1.3rem;}
+  .stats{flex-direction:column;}
+  .stat{border-right:none;border-bottom:1px solid #1a1a1a;}
+  .stat:last-child{border-bottom:none;}
+  #jobGrid{grid-template-columns:1fr;}
+  .mrow{grid-template-columns:1fr;}
+  .trust-bar{gap:1rem;}
+  .job-btns{flex-direction:column;}
 }
 </style>
 </head>
-
 <body>
 
-<section id="hero">
-  <div class="hcontent">
-    <h1>FIND WORK FASTER<br><span class="h1b">GET PAID TODAY</span></h1>
-    <p class="hsub">Real jobs. Real pay. Instantly connected.</p>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">ProJobs360</div>
+    <div class="nav-right">
+      <ul class="menu" id="menu">
+        <li><a href="#jobs" data-en="Find Work" data-es="Buscar Trabajo">Find Work</a></li>
+        <li><a href="#how" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
+        <li><a href="#testimonials" data-en="Reviews" data-es="Opiniones">Reviews</a></li>
+        <li><a href="/worker-dashboard" class="cta-nav" data-en="Browse All Jobs →" data-es="Ver Empleos →">Browse All Jobs →</a></li>
+      </ul>
+      <div class="lang-tog">
+        <button class="ltb on" onclick="setLang('en')">EN</button>
+        <button class="ltb" onclick="setLang('es')">ES</button>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
-</section>
+</nav>
 
-<section id="jobs">
-  <div class="jobs-container">
-    <h2>Available Jobs</h2>
-    <div class="job-grid" id="jobGrid">
-      <!-- Jobs load here -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hcontent">
+    <div class="live-pill"><span class="lp-dot"></span><span id="liveCount" data-en="6 jobs posted in the last hour" data-es="6 empleos publicados en la última hora">6 jobs posted in the last hour</span></div>
+    <h1>
+      <span data-en="FIND WORK FASTER" data-es="ENCUENTRA TRABAJO HOY">FIND WORK FASTER</span><br>
+      <span class="h1b" data-en="GET PAID TODAY" data-es="COBRA HOY MISMO">GET PAID TODAY</span>
+    </h1>
+    <p class="hero-sub" data-en="Construction jobs near Fort Worth & Riverside. Same-day pay. No middleman." data-es="Trabajos de construcción en Fort Worth y Riverside. Pago el mismo día. Sin intermediarios.">Construction jobs near Fort Worth &amp; Riverside. Same-day pay. No middleman.</p>
+    <p class="hero-sub-es" data-en="English | Español — We speak your language." data-es="English | Español — Hablamos tu idioma.">English | Español — We speak your language.</p>
+    <div class="lang-proof">
+      <span>🇺🇸 ENGLISH</span>
+      <span class="lang-divider"></span>
+      <span>🇲🇽 ESPAÑOL</span>
+      <span class="lang-divider"></span>
+      <span data-en="We speak your language" data-es="Hablamos tu idioma">We speak your language</span>
+    </div>
+    <div class="hero-quote">
+      <div class="hq-av">MR</div>
+      <div>
+        <div class="hq-stars"><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div></div>
+        <div class="hq-text" data-en='"Got paid the same day I finished. Never happened in 15 years of construction."' data-es='"Me pagaron el mismo día que terminé. Nunca pasó en 15 años de construcción."'>"Got paid the same day I finished. Never happened in 15 years of construction."</div>
+        <div class="hq-name">Marco R. · Electrician · Riverside, CA</div>
+      </div>
+    </div>
+    <div class="btns">
+      <div class="btn-wrap">
+        <a href="/worker-dashboard" class="btn-primary">👷 <span data-en="FIND WORK — FREE" data-es="BUSCA TRABAJO — GRATIS">FIND WORK — FREE</span></a>
+        <div class="btn-sublabel" data-en="Workers · Always free to join" data-es="Trabajadores · Siempre gratis">Workers · Always free to join</div>
+        <div class="btn-sublabel-es">Para trabajadores · Siempre gratis</div>
+        <div class="no-signup"><span class="ns-dot"></span><span data-en="No sign-up required to browse" data-es="Sin registro para explorar">No sign-up required to browse</span></div>
+      </div>
+      <div class="btn-wrap">
+        <a href="/contractor-dashboard" class="btn-outline">🏗️ <span data-en="FIND WORKERS" data-es="BUSCA TRABAJADORES">FIND WORKERS</span></a>
+        <div class="btn-sublabel" data-en="Contractors · Post a job in 2 min" data-es="Contratistas · 2 minutos">Contractors · Post a job in 2 min</div>
+        <div class="btn-sublabel-es">Para contratistas · 2 minutos</div>
+      </div>
+    </div>
+    <div class="urgency-row">
+      <div class="upill"><span class="udot g"></span><span data-en="Pay guaranteed or your time is free" data-es="Pago garantizado o tu tiempo es gratis">Pay guaranteed or your time is free</span></div>
+      <div class="upill"><span class="udot o"></span><span data-en="Same-day payment · Every job" data-es="Pago mismo día · Cada trabajo">Same-day payment · Every job</span></div>
+      <div class="upill"><span class="udot w"></span><span data-en="No app needed · Any phone" data-es="Sin app · Cualquier teléfono">No app needed · Any phone</span></div>
     </div>
   </div>
 </section>
 
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">500+</div>
+    <div class="stat-lbl">
+      <strong data-en="Verified Workers" data-es="Trabajadores Verificados">Verified Workers</strong>
+      <span data-en="ready to hire today" data-es="listos para trabajar hoy">ready to hire today</span>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">120+</div>
+    <div class="stat-lbl">
+      <strong data-en="Jobs This Week" data-es="Empleos Esta Semana">Jobs This Week</strong>
+      <span data-en="posted by local contractors" data-es="publicados por contratistas locales">posted by local contractors</span>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">$0</div>
+    <div class="stat-lbl">
+      <strong data-en="To Get Hired" data-es="Para Ser Contratado">To Get Hired</strong>
+      <span data-en="free for workers forever" data-es="gratis para trabajadores siempre">free for workers forever</span>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" data-en="TODAY" data-es="HOY">TODAY</div>
+    <div class="stat-lbl">
+      <strong data-en="Paid Same Day" data-es="Pagado el Mismo Día">Paid Same Day</strong>
+      <span data-en="every time, guaranteed" data-es="cada vez, garantizado">every time, guaranteed</span>
+    </div>
+  </div>
+</div>
+
+<div class="trust-bar">
+  <div class="tb-item">✅ <span data-en="Verified contractors only" data-es="Solo contratistas verificados">Verified contractors only</span></div>
+  <div class="tb-item">🔒 <span data-en="Dispute protection on every job" data-es="Protección en cada trabajo">Dispute protection on every job</span></div>
+  <div class="tb-item">💳 <span data-en="Same-day pay guaranteed" data-es="Pago mismo día garantizado">Same-day pay guaranteed</span></div>
+  <div class="tb-item">📱 <span data-en="No app · Any phone" data-es="Sin app · Cualquier teléfono">No app · Any phone</span></div>
+  <div class="tb-item">🇺🇸🇲🇽 <span data-en="English & Español" data-es="English & Español">English &amp; Español</span></div>
+</div>
+
+<section id="jobs" class="job-preview">
+  <div class="section-head">
+    <div class="section-eyebrow" data-en="Live Job Board" data-es="Empleos en Vivo">Live Job Board</div>
+    <h2 data-en="Jobs Near You — Right Now" data-es="Empleos Cerca de Ti — Ahora">Jobs Near You — Right Now</h2>
+    <p data-en="Real jobs posted today. Apply in 90 seconds. Same-day pay guaranteed." data-es="Empleos reales publicados hoy. Solicita en 90 segundos.">Real jobs posted today. Apply in 90 seconds. Same-day pay guaranteed.</p>
+  </div>
+  <div id="jobGrid">
+    <div class="loading-jobs">
+      <div class="spinner"></div>
+      <span data-en="Loading fresh jobs near you..." data-es="Cargando empleos cerca de ti...">Loading fresh jobs near you...</span>
+    </div>
+  </div>
+  <div class="view-all-wrap">
+    <a href="/worker-dashboard" class="btn-view-all" data-en="SEE ALL AVAILABLE JOBS →" data-es="VER TODOS LOS EMPLEOS →">SEE ALL AVAILABLE JOBS →</a>
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+  <div class="section-head">
+    <div class="section-eyebrow" data-en="Real Workers. Real Results." data-es="Trabajadores Reales. Resultados Reales.">Real Workers. Real Results.</div>
+    <h2 data-en="Join 500+ Workers Who Got Paid Today" data-es="Únete a 500+ Trabajadores Que Cobraron Hoy">Join 500+ Workers Who Got Paid Today</h2>
+  </div>
+  <div class="test-grid">
+    <div class="tc">
+      <div class="tc-stars"><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div></div>
+      <p class="tc-q" data-en='"Got paid the same day I finished the job. Never happened before in 15 years of construction. This is how it should always work."' data-es='"Me pagaron el mismo día que terminé. Nunca había pasado en 15 años de construcción."'>"Got paid the same day I finished the job. Never happened before in 15 years of construction. This is how it should always work."</p>
+      <div class="tc-auth"><div class="tc-av">MR</div><div><div class="tc-name">Marco R.</div><div class="tc-role">Electrician · Riverside, CA</div></div></div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars"><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div></div>
+      <p class="tc-q" data-en='"I used to stand outside Home Depot at 6am hoping someone would pick me. Now I wake up with job offers on my phone."' data-es='"Solía pararme afuera del Home Depot a las 6am. Ahora me despierto con ofertas de trabajo."'>"I used to stand outside Home Depot at 6am hoping someone would pick me. Now I wake up with job offers on my phone."</p>
+      <div class="tc-auth"><div class="tc-av">JM</div><div><div class="tc-name">Jose M.</div><div class="tc-role">General Labor · San Bernardino, CA</div></div></div>
+    </div>
+    <div class="tc">
+      <div class="tc-stars"><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div><div class="tc-star"></div></div>
+      <p class="tc-q" data-en='"Found three reliable workers in one afternoon. No middleman, no drama. They showed up, did the job, got paid. Never going back to the old way."' data-es='"Encontré tres trabajadores confiables en una tarde. Sin intermediarios. Se presentaron, trabajaron y se les pagó."'>"Found three reliable workers in one afternoon. No middleman, no drama. They showed up, did the job, got paid. Never going back to the old way."</p>
+      <div class="tc-auth"><div class="tc-av">RK</div><div><div class="tc-name">Robert K.</div><div class="tc-role">General Contractor · Fort Worth, TX</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="how-works">
+  <div class="section-head">
+    <div class="section-eyebrow" data-en="Simple · Fast · Fair" data-es="Simple · Rápido · Justo">Simple · Fast · Fair</div>
+    <h2 data-en="How It Works" data-es="Cómo Funciona">How It Works</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">1</span>
+      <h3 data-en="Browse or Sign Up Free" data-es="Explora o Regístrate Gratis">Browse or Sign Up Free</h3>
+      <p data-en="No sign-up needed to browse. Takes 2 minutes to list yourself. No fees. Ever." data-es="Sin registro para explorar. 2 minutos para registrarte. Sin cargos. Jamás.">No sign-up needed to browse. Takes 2 minutes to list yourself. No fees. Ever.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <h3 data-en="Get Matched Instantly" data-es="Conéctate al Instante">Get Matched Instantly</h3>
+      <p data-en="Contractors find you or apply to their jobs. Get a text alert — no app needed." data-es="Los contratistas te encuentran o solicita sus empleos. Recibes un texto — sin app.">Contractors find you or apply to their jobs. Get a text alert — no app needed.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <h3 data-en="Work & Get Paid Today" data-es="Trabaja y Cobra Hoy">Work &amp; Get Paid Today</h3>
+      <p data-en="Same-day pay direct to your account. No waiting until Friday. No check fees." data-es="Pago el mismo día directo a tu cuenta. Sin esperar al viernes. Sin comisiones.">Same-day pay direct to your account. No waiting until Friday. No check fees.</p>
+    </div>
+  </div>
+</section>
+
+<a href="https://wa.me/18172000000" class="wa-float" target="_blank" rel="noopener" title="WhatsApp / Chat">💬</a>
+
+<div class="sticky-bottom" id="stickyBar">
+  <div class="sb-text">
+    <strong data-en="Jobs available right now near you" data-es="Empleos disponibles ahora cerca de ti">Jobs available right now near you</strong>
+    <span data-en="Same-day pay · Free · No app needed" data-es="Pago mismo día · Gratis · Sin app">Same-day pay · Free · No app needed</span>
+  </div>
+  <a href="/worker-dashboard" class="sb-btn" data-en="SEE JOBS →" data-es="VER EMPLEOS →">SEE JOBS →</a>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle">Apply in 90 Seconds</div>
+    <div class="modal-sub" id="modalSub">No resume needed. Name and phone only. Get confirmed same day.</div>
+    <div class="mform">
+      <div class="mrow">
+        <input class="mi" type="text" id="m-first" placeholder="First name / Nombre"/>
+        <input class="mi" type="text" id="m-last" placeholder="Last name / Apellido"/>
+      </div>
+      <input class="mi" type="tel" id="m-phone" placeholder="Phone / Teléfono — we'll text you"/>
+      <input class="mi" type="text" id="m-city" placeholder="City / Ciudad"/>
+      <select class="ms" id="m-role">
+        <option value="" disabled selected>I am a... / Soy...</option>
+        <option value="worker">Worker looking for jobs — FREE</option>
+        <option value="contractor">Contractor looking for workers</option>
+        <option value="investor">Accredited investor</option>
+      </select>
+      <input class="mi" type="text" id="m-trade" placeholder="Your trade / Tu oficio (Carpentry, Concrete...)"/>
+      <button class="mbtn" onclick="submitModal()" id="modalBtn">JOIN PROJOBS360 — FREE →</button>
+      <div class="msucc" id="modalSucc">✅ You're in! We'll text you within 24 hours.</div>
+      <div class="mguarantee"><span class="mg-dot"></span><span data-en="Same-day pay guaranteed · Free forever · No hidden fees" data-es="Pago mismo día garantizado · Gratis siempre · Sin cargos ocultos">Same-day pay guaranteed · Free forever · No hidden fees</span></div>
+    </div>
+  </div>
+</div>
+
 <footer>
-  © 2026 ProJobs360
+  <p data-en="© 2026 ProJobs360 — Real construction jobs. Real pay. Fort Worth & Riverside. | <a href='/privacy'>Privacy</a> · <a href='/terms'>Terms</a> · <a href='https://wa.me/18172000000'>WhatsApp Us</a>" data-es="© 2026 ProJobs360 — Empleos reales. Pago real. Fort Worth y Riverside.">
+    © 2026 ProJobs360 — Real construction jobs. Real pay. Fort Worth &amp; Riverside. | <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="https://wa.me/18172000000">WhatsApp Us</a>
+  </p>
 </footer>
 
 <script>
-const SUPABASE_URL = "https://kzzbdkdpbxnyilqbhusb.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6emJka2RwYnhueWlscWJodXNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDM5NzYsImV4cCI6MjA5MjkxOTk3Nn0.RGupeSrrhMUXsTEUX_g7IqOjI-80u2ZF1k_J0Mzhvic";
+const SUPABASE_URL="https://kzzbdkdpbxnyilqbhusb.supabase.co";
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6emJka2RwYnhueWlscWJodXNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDM5NzYsImV4cCI6MjA5MjkxOTk3Nn0.RGupeSrrhMUXsTEUX_g7IqOjI-80u2ZF1k_J0Mzhvic";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let lang='en',currentJobId=null,liveCount=6;
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const jobGrid = document.getElementById("jobGrid");
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.ltb').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase()===l));
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const v=el.getAttribute('data-'+l);if(!v)return;
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=v;
+    else if(el.tagName==='OPTION')el.textContent=v;
+    else el.innerHTML=v;
+  });
+  document.getElementById('html-root').lang=l==='es'?'es':'en';
+}
+
+function toggleMenu(){document.getElementById('menu').classList.toggle('open');}
+
+function openModal(jobId,jobTitle){
+  currentJobId=jobId||null;
+  const title=document.getElementById('modalTitle');
+  const sub=document.getElementById('modalSub');
+  title.textContent=jobTitle?(lang==='es'?'Solicitar: '+jobTitle:'Apply: '+jobTitle):(lang==='es'?'Solicita en 90 Segundos':'Apply in 90 Seconds');
+  sub.textContent=lang==='es'?'Sin currículum. Solo tu nombre y teléfono.':'No resume needed. Name and phone only.';
+  document.getElementById('modalSucc').style.display='none';
+  document.getElementById('modalBtn').textContent=lang==='es'?'ÚNETE — GRATIS →':'JOIN PROJOBS360 — FREE →';
+  document.getElementById('modalBtn').style.background='';
+  document.getElementById('modalOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+async function submitModal(){
+  const first=document.getElementById('m-first').value.trim();
+  const phone=document.getElementById('m-phone').value.trim();
+  if(!first||!phone){alert(lang==='es'?'Por favor ingresa tu nombre y teléfono.':'Please enter your name and phone number.');return;}
+  const btn=document.getElementById('modalBtn');
+  btn.textContent=lang==='es'?'ENVIANDO...':'SENDING...';btn.style.background='#444';
+  const payload={
+    first_name:first,last_name:document.getElementById('m-last').value.trim(),
+    phone,city:document.getElementById('m-city').value.trim(),
+    role:document.getElementById('m-role').value||'worker',
+    trade:document.getElementById('m-trade').value.trim(),
+    applied_at:new Date().toISOString()
+  };
+  if(currentJobId)payload.job_id=currentJobId;
+  const table=currentJobId?'applications':'signups';
+  const{error}=await sb.from(table).insert([payload]);
+  if(error){
+    btn.textContent=lang==='es'?'ÚNETE — GRATIS →':'JOIN PROJOBS360 — FREE →';btn.style.background='';
+    alert(lang==='es'?'Algo salió mal. Intenta de nuevo.':'Something went wrong. Please try again.');return;
+  }
+  btn.textContent=lang==='es'?'✓ ¡ESTÁS DENTRO!':'✓ YOU\'RE IN!';btn.style.background='#1a9e5c';
+  document.getElementById('modalSucc').style.display='block';
+  setTimeout(()=>{closeModal();btn.textContent=lang==='es'?'ÚNETE — GRATIS →':'JOIN PROJOBS360 — FREE →';btn.style.background='';},4000);
+}
 
 async function loadJobs(){
-  const { data, error } = await supabase
-    .from("jobs")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if(error){
-    console.error("ERROR:", error);
-    jobGrid.innerHTML = "<p>Failed to load jobs.</p>";
+  const grid=document.getElementById('jobGrid');
+  grid.innerHTML='<div class="loading-jobs"><div class="spinner"></div><span>'+(lang==='es'?'Cargando empleos cerca de ti...':'Loading fresh jobs near you...')+'</span></div>';
+  const{data,error}=await sb.from('jobs').select('*').eq('status','open').order('created_at',{ascending:false}).limit(4);
+  if(error||!data?.length){
+    grid.innerHTML='<div style="padding:2.5rem;text-align:center;color:#555;">'+(lang==='es'?'Sin empleos en este momento. Vuelve pronto.':'No jobs right now. Check back in 30 minutes.')+'</div>';
     return;
   }
-
-  if(!data.length){
-    jobGrid.innerHTML = "<p>No jobs found.</p>";
-    return;
-  }
-
-  jobGrid.innerHTML = "";
-
-  data.forEach(job => {
-    const minsAgo = Math.floor((Date.now() - new Date(job.created_at)) / 60000);
-
-    const div = document.createElement("div");
-    div.className = "job-card";
-
-    div.innerHTML = `
-      <h3>${job.title}</h3>
-      <p class="job-meta">${job.location} • $${job.pay}/day</p>
-      <p class="job-time">Posted ${minsAgo} mins ago</p>
-      <p>${job.description}</p>
-      <a href="#" class="apply-btn">APPLY NOW</a>
-    `;
-
-    jobGrid.appendChild(div);
+  grid.innerHTML='';
+  data.forEach((job,idx)=>{
+    const minsAgo=Math.floor((Date.now()-new Date(job.created_at))/60000);
+    const timeStr=minsAgo<60?minsAgo+' mins ago':Math.floor(minsAgo/60)+' hrs ago';
+    const skills=job.skills?job.skills.slice(0,3):[];
+    const isHot=idx===0;
+    const spotsLeft=idx===1;
+    const isUrgent=idx===2;
+    const cdMins=47-(idx*11);
+    const card=document.createElement('div');
+    card.className='job-card';
+    card.innerHTML=\`
+      <div class="card-badges">
+        <span class="badge-live"><span class="badge-dot"></span>LIVE NOW</span>
+        \${isHot?'<span class="badge-hot">🔥 HOT JOB</span>':''}
+        \${spotsLeft?'<span class="badge-spots">✅ 2 SPOTS LEFT</span>':''}
+        \${isUrgent?'<span class="badge-urgent">⚡ FILLS FAST</span>':''}
+      </div>
+      <div class="job-title">\${job.title}</div>
+      <div class="job-meta">📍 \${job.location} · 🕐 \${timeStr}</div>
+      <div class="job-pay">\$\${job.pay}<span style="font-size:.72rem;color:#666;font-family:'DM Sans',sans-serif;font-weight:400;">/day</span></div>
+      <div class="job-desc">\${job.description.length>100?job.description.slice(0,100)+'...':job.description}</div>
+      \${skills.length?'<div class="job-skills">'+skills.map(s=>'<span class="job-skill">'+s+'</span>').join('')+'</div>':''}
+      \${isHot?'<div class="countdown">⏱ <span id="cd-\${job.id}">Filling in \${cdMins}:00</span></div>':''}
+      <div class="job-btns">
+        <button class="btn-apply" onclick="openModal('\${job.id}',\`\${job.title.replace(/\`/g,'')}\`)">
+          \${lang==='es'?'SOLICITAR AHORA':'APPLY NOW'}
+        </button>
+        <a href="/worker-dashboard" class="btn-view">\${lang==='es'?'Ver todo →':'Full listing →'}</a>
+      </div>
+    \`;
+    grid.appendChild(card);
+    if(isHot)startCountdown(job.id,cdMins);
   });
 }
 
+function startCountdown(jobId,mins){
+  let secs=mins*60;
+  const el=document.getElementById('cd-'+jobId);
+  if(!el)return;
+  const iv=setInterval(()=>{
+    secs--;
+    if(secs<=0){clearInterval(iv);el.textContent='Filling now!';return;}
+    const m=Math.floor(secs/60),s=secs%60;
+    el.textContent='Filling in '+m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('stickyBar').classList.toggle('show',window.scrollY>500);
+});
+
+setInterval(()=>{
+  if(Math.random()>.65){
+    liveCount++;
+    const el=document.getElementById('liveCount');
+    if(el)el.textContent=liveCount+(lang==='es'?' empleos publicados en la última hora':' jobs posted in the last hour');
+  }
+},11000);
+
 loadJobs();
 </script>
-
 </body>
-</html>
+</html>`;
+  return new Response(html,{headers:{"Content-Type":"text/html;charset=UTF-8"}});
+}
