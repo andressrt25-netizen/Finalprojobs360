@@ -1,169 +1,143 @@
+// 🚀 FULL PROJOBS360 MARKETPLACE (FRONTEND + BACKEND + SIMPLE STORAGE)
+// This version upgrades EVERYTHING into a working prototype
+
+// ================= BACKEND =================
+// Run with: node server.js
+
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { v4: uuidv4 } = require('uuid');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// TEMP DATABASE (replace with Firebase later)
+let users = [];
+let jobs = [];
+let applications = [];
+
+// ===== USERS =====
+app.post('/signup', (req, res) => {
+  const { name, phone, skills } = req.body;
+
+  const user = { id: uuidv4(), name, phone, skills };
+  users.push(user);
+
+  res.json(user);
+});
+
+// ===== JOBS =====
+app.post('/jobs', (req, res) => {
+  const job = { id: uuidv4(), ...req.body, createdAt: new Date() };
+  jobs.unshift(job);
+  res.json(job);
+});
+
+app.get('/jobs', (req, res) => {
+  res.json(jobs);
+});
+
+// ===== APPLY =====
+app.post('/apply', (req, res) => {
+  const { userId, jobId } = req.body;
+
+  const appEntry = {
+    id: uuidv4(),
+    userId,
+    jobId,
+    status: 'pending'
+  };
+
+  applications.push(appEntry);
+  res.json(appEntry);
+});
+
+// ===== DASHBOARDS =====
+app.get('/worker/:id', (req, res) => {
+  const workerApps = applications.filter(a => a.userId === req.params.id);
+  res.json(workerApps);
+});
+
+app.get('/employer/jobs', (req, res) => {
+  res.json(jobs);
+});
+
+app.get('/employer/applications/:jobId', (req, res) => {
+  const apps = applications.filter(a => a.jobId === req.params.jobId);
+  res.json(apps);
+});
+
+app.listen(3000, () => console.log('🔥 API running on http://localhost:3000'));
+
+
+// ================= FRONTEND (SIMPLE HTML) =================
+
+/*
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html>
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ProJobs360 – Find Work. Get Paid Today. | Fort Worth & Riverside</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-<style>
-:root{--o:#FF6A28;--o2:#E55A1A;--g:#1a9e5c;--g2:#158a4e;--s1:#0a0a0a;--s2:#111;}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:#000;color:#fff;font-family:'DM Sans',sans-serif;line-height:1.5;overflow-x:hidden;}
-
-nav{position:sticky;top:0;z-index:1000;padding:.9rem 5%;background:rgba(0,0,0,.97);border-bottom:1px solid rgba(255,255,255,.08);}
-.nav-inner{display:flex;justify-content:space-between;align-items:center;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--o);}
-.nav-right{display:flex;align-items:center;gap:1.2rem;}
-.menu{display:flex;gap:1.6rem;align-items:center;list-style:none;}
-.menu a{color:#bbb;font-size:.85rem;text-decoration:none;font-weight:500;letter-spacing:.4px;transition:color .2s;}
-.menu a:hover{color:var(--o);}
-.cta-nav{background:var(--o);color:#000 !important;padding:.5rem 1.2rem;border-radius:6px;font-weight:700;font-size:.85rem;min-height:40px;display:inline-flex;align-items:center;}
-.lang-tog{display:flex;border:1px solid rgba(255,255,255,.15);border-radius:4px;overflow:hidden;}
-.ltb{background:none;border:none;color:#888;font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:.3rem .65rem;cursor:pointer;transition:.2s;}
-.ltb.on{background:var(--o);color:#fff;}
-.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;padding:6px;background:none;border:none;}
-.hamburger span{width:22px;height:2px;background:var(--o);border-radius:2px;display:block;}
-@media(max-width:768px){
-  .hamburger{display:flex;}
-  .menu{display:none;flex-direction:column;gap:1.2rem;padding:1.5rem 5%;position:absolute;top:100%;left:0;right:0;background:rgba(0,0,0,.98);border-bottom:1px solid #1a1a1a;}
-  .menu.open{display:flex;}
-}
-
-#hero{min-height:86vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 5% 3rem;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400") center/cover;opacity:.1;}
-.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(255,106,40,.1) 0%,transparent 70%);pointer-events:none;}
-.hcontent{position:relative;z-index:2;max-width:780px;width:100%;}
-.live-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,106,40,.1);border:1px solid rgba(255,106,40,.25);color:var(--o);font-size:.63rem;letter-spacing:.14em;padding:.38rem 1rem;border-radius:100px;margin-bottom:1.2rem;}
-.lp-dot{width:6px;height:6px;background:var(--o);border-radius:50%;animation:blink 1.8s infinite;flex-shrink:0;}
-@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.4);}}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,9vw,6.5rem);line-height:.96;letter-spacing:1px;margin-bottom:.9rem;}
-.h1b{color:var(--o);}
-.hero-sub{color:#bbb;font-size:1rem;margin:.6rem auto;line-height:1.8;max-width:560px;}
-.hero-sub-es{color:#555;font-size:.85rem;font-style:italic;margin-bottom:.5rem;}
-.lang-proof{display:inline-flex;align-items:center;gap:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.35rem 1rem;border-radius:100px;margin-bottom:1.4rem;font-size:.75rem;color:#888;letter-spacing:.08em;}
-.lang-divider{width:1px;height:12px;background:rgba(255,255,255,.15);}
-.hero-quote{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--o);border-radius:0 6px 6px 0;padding:.85rem 1.1rem;margin:0 auto 1.8rem;max-width:520px;text-align:left;display:flex;align-items:flex-start;gap:.8rem;}
-.hq-av{width:34px;height:34px;border-radius:5px;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:#fff;flex-shrink:0;}
-.hq-stars{display:flex;gap:2px;margin-bottom:.22rem;}
-.hq-star{width:9px;height:9px;background:var(--o);border-radius:1px;}
-.hq-text{font-size:.8rem;color:#ddd;line-height:1.6;font-style:italic;}
-.hq-name{font-size:.68rem;color:#666;margin-top:.22rem;}
-.btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.7rem;}
-.btn-wrap{display:flex;flex-direction:column;align-items:center;}
-.btn-primary{background:var(--g);color:#fff;padding:1rem 2.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;font-weight:700;border-radius:8px;text-decoration:none;letter-spacing:.8px;min-height:52px;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none;animation:glowGreen 2.5s infinite;transition:background .2s;}
-@keyframes glowGreen{0%,100%{box-shadow:0 0 22px rgba(26,158,92,.45);}50%{box-shadow:0 0 44px rgba(26,158,92,.75);}}
-.btn-primary:hover{background:var(--g2);animation:none;}
-.btn-outline{background:transparent;color:#fff;padding:1rem 2.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.25rem;font-weight:700;border:2px solid #fff;border-radius:8px;text-decoration:none;letter-spacing:.8px;min-height:52px;display:inline-flex;align-items:center;gap:.6rem;box-shadow:0 0 24px rgba(255,255,255,.1);transition:.2s;}
-.btn-outline:hover{background:#fff;color:#000;}
-.btn-sublabel{font-size:.6rem;color:#555;letter-spacing:.1em;text-transform:uppercase;margin-top:.3rem;}
-.btn-sublabel-es{font-size:.57rem;color:#444;font-style:italic;margin-top:.1rem;}
-.no-signup{font-size:.65rem;color:var(--g);margin-top:.26rem;display:flex;align-items:center;gap:.3rem;}
-.ns-dot{width:5px;height:5px;background:var(--g);border-radius:50%;flex-shrink:0;}
-.urgency-row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:.65rem auto 0;}
-.upill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#bbb;font-size:.64rem;letter-spacing:.06em;padding:.28rem .82rem;border-radius:100px;}
-.udot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.udot.o{background:var(--o);}.udot.g{background:var(--g);}.udot.w{background:#fff;}
-
-footer{text-align:center;padding:2rem 5%;color:#444;font-size:.78rem;background:#000;border-top:1px solid #111;}
-</style>
+<title>ProJobs360 App</title>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">ProJobs360</div>
-    <div class="nav-right">
-      <ul class="menu" id="menu">
-        <li><a href="#jobs" data-en="Find Work" data-es="Buscar Trabajo">Find Work</a></li>
-        <li><a href="#how" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
-        <li><a href="#testimonials" data-en="Reviews" data-es="Opiniones">Reviews</a></li>
-        <li><a href="/worker-dashboard" class="cta-nav" data-en="Browse All Jobs →" data-es="Ver Empleos →">Browse All Jobs →</a></li>
-      </ul>
-      <div class="lang-tog">
-        <button class="ltb on" onclick="setLang('en')">EN</button>
-        <button class="ltb" onclick="setLang('es')">ES</button>
-      </div>
-      <button class="hamburger" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
+<h2>Signup</h2>
+<input id="name" placeholder="Name"/>
+<input id="phone" placeholder="Phone"/>
+<button onclick="signup()">Start Working</button>
 
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hcontent">
-    <div class="live-pill">
-      <span class="lp-dot"></span>
-      <span id="liveCount" data-en="6 jobs posted in the last hour" data-es="6 empleos publicados en la última hora">6 jobs posted in the last hour</span>
-    </div>
-    <h1>
-      <span data-en="FIND WORK FASTER" data-es="ENCUENTRA TRABAJO HOY">FIND WORK FASTER</span><br>
-      <span class="h1b" data-en="GET PAID TODAY" data-es="COBRA HOY MISMO">GET PAID TODAY</span>
-    </h1>
-    <p class="hero-sub" data-en="Construction jobs near Fort Worth & Riverside. Same-day pay. No middleman." data-es="Trabajos de construcción en Fort Worth y Riverside. Pago el mismo día. Sin intermediarios.">Construction jobs near Fort Worth &amp; Riverside. Same-day pay. No middleman.</p>
-    <p class="hero-sub-es" data-en="English | Español — We speak your language." data-es="English | Español — Hablamos tu idioma.">English | Español — We speak your language.</p>
-    <div class="lang-proof">
-      <span>🇺🇸 ENGLISH</span>
-      <span class="lang-divider"></span>
-      <span>🇲🇽 ESPAÑOL</span>
-      <span class="lang-divider"></span>
-      <span data-en="We speak your language" data-es="Hablamos tu idioma">We speak your language</span>
-    </div>
-    <div class="hero-quote">
-      <div class="hq-av">MR</div>
-      <div>
-        <div class="hq-stars"><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div><div class="hq-star"></div></div>
-        <div class="hq-text" data-en='"Got paid the same day I finished. Never happened in 15 years of construction."' data-es='"Me pagaron el mismo día que terminé. Nunca pasó en 15 años de construcción."'>"Got paid the same day I finished. Never happened in 15 years of construction."</div>
-        <div class="hq-name">Marco R. · Electrician · Riverside, CA</div>
-      </div>
-    </div>
-    <div class="btns">
-      <div class="btn-wrap">
-        <a href="/worker-dashboard" class="btn-primary">👷 <span data-en="FIND WORK — FREE" data-es="BUSCA TRABAJO — GRATIS">FIND WORK — FREE</span></a>
-        <div class="btn-sublabel" data-en="Workers · Always free to join" data-es="Trabajadores · Siempre gratis">Workers · Always free to join</div>
-        <div class="btn-sublabel-es">Para trabajadores · Siempre gratis</div>
-        <div class="no-signup"><span class="ns-dot"></span><span data-en="No sign-up required to browse" data-es="Sin registro para explorar">No sign-up required to browse</span></div>
-      </div>
-      <div class="btn-wrap">
-        <a href="/contractor-dashboard" class="btn-outline">🏗️ <span data-en="FIND WORKERS" data-es="BUSCA TRABAJADORES">FIND WORKERS</span></a>
-        <div class="btn-sublabel" data-en="Contractors · Post a job in 2 min" data-es="Contratistas · 2 minutos">Contractors · Post a job in 2 min</div>
-        <div class="btn-sublabel-es">Para contratistas · 2 minutos</div>
-      </div>
-    </div>
-    <div class="urgency-row">
-      <div class="upill"><span class="udot g"></span><span data-en="Pay guaranteed or your time is free" data-es="Pago garantizado o tu tiempo es gratis">Pay guaranteed or your time is free</span></div>
-      <div class="upill"><span class="udot o"></span><span data-en="Same-day payment · Every job" data-es="Pago mismo día · Cada trabajo">Same-day payment · Every job</span></div>
-      <div class="upill"><span class="udot w"></span><span data-en="No app needed · Any phone" data-es="Sin app · Cualquier teléfono">No app needed · Any phone</span></div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>© 2026 ProJobs360 — Fort Worth &amp; Riverside · More sections coming below</p>
-</footer>
+<h2>Jobs</h2>
+<div id="jobs"></div>
 
 <script>
-let lang = 'en', liveCount = 6;
-function setLang(l) {
-  lang = l;
-  document.querySelectorAll('.ltb').forEach(b => b.classList.toggle('on', b.textContent.toLowerCase() === l));
-  document.querySelectorAll('[data-en]').forEach(el => {
-    const v = el.getAttribute('data-' + l); if (!v) return;
-    if (el.tagName === 'INPUT') el.placeholder = v;
-    else el.innerHTML = v;
+let currentUser = null;
+
+function signup(){
+  fetch('http://localhost:3000/signup', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      name:document.getElementById('name').value,
+      phone:document.getElementById('phone').value,
+      skills:['labor']
+    })
+  })
+  .then(res=>res.json())
+  .then(user=>{
+    currentUser = user;
+    loadJobs();
   });
 }
-function toggleMenu() { document.getElementById('menu').classList.toggle('open'); }
-setInterval(() => {
-  if (Math.random() > .65) {
-    liveCount++;
-    const el = document.getElementById('liveCount');
-    if (el) el.textContent = liveCount + (lang === 'es' ? ' empleos publicados en la última hora' : ' jobs posted in the last hour');
-  }
-}, 11000);
+
+function loadJobs(){
+  fetch('http://localhost:3000/jobs')
+  .then(res=>res.json())
+  .then(data=>{
+    document.getElementById('jobs').innerHTML = data.map(j=>`
+      <div>
+        <h3>${j.title}</h3>
+        <p>$${j.pay}</p>
+        <button onclick="apply('${j.id}')">Apply</button>
+      </div>
+    `).join('');
+  });
+}
+
+function apply(jobId){
+  fetch('http://localhost:3000/apply',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      userId: currentUser.id,
+      jobId
+    })
+  }).then(()=>alert('Applied!'));
+}
+
 </script>
+
 </body>
-</html>`;
+</html>
+*/
+
