@@ -51,41 +51,12 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 .sdpay{display:inline-flex;align-items:center;gap:.6rem;background:#000;border:1px solid var(--o);color:var(--w);font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;padding:.55rem 1.3rem;border-radius:3px;margin:.8rem auto 2.8rem;}
 .sdpay-dot{width:7px;height:7px;background:var(--o);border-radius:50%;animation:blink 1.5s infinite;flex-shrink:0;}
 
-/* HERO BUTTONS — THE TWO MAIN CTAs */
+/* HERO BUTTONS */
 .hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
-.cta-work{
-  background:var(--o);
-  color:var(--w);
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.6rem;
-  letter-spacing:.08em;
-  padding:1.2rem 3.5rem;
-  border-radius:4px;
-  text-decoration:none;
-  border:none;
-  cursor:pointer;
-  transition:background .2s,transform .15s,box-shadow .2s;
-  box-shadow:0 0 40px rgba(240,96,32,.4);
-  display:inline-flex;align-items:center;gap:.7rem;
-  white-space:nowrap;
-}
+.cta-work{background:var(--o);color:var(--w);font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;padding:1.2rem 3.5rem;border-radius:4px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 0 40px rgba(240,96,32,.4);display:inline-flex;align-items:center;gap:.7rem;white-space:nowrap;}
 .cta-work:hover{background:var(--o2);transform:translateY(-3px);box-shadow:0 0 60px rgba(240,96,32,.55);}
 .cta-work-icon{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.cta-hire{
-  background:var(--w);
-  color:#000;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.6rem;
-  letter-spacing:.08em;
-  padding:1.2rem 3.5rem;
-  border-radius:4px;
-  text-decoration:none;
-  border:none;
-  cursor:pointer;
-  transition:background .2s,transform .15s;
-  display:inline-flex;align-items:center;gap:.7rem;
-  white-space:nowrap;
-}
+.cta-hire{background:var(--w);color:#000;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;padding:1.2rem 3.5rem;border-radius:4px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.7rem;white-space:nowrap;}
 .cta-hire:hover{background:var(--w2);transform:translateY(-3px);}
 .cta-hire-icon{width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
 .cta-label{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--w3);letter-spacing:.12em;text-transform:uppercase;margin-top:.5rem;}
@@ -104,7 +75,6 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 .how-label-sub{font-family:'Space Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase;}
 .how-label-div{width:1px;height:32px;background:rgba(255,255,255,.25);}
 .how-grid{display:grid;grid-template-columns:1fr 1fr;}
-/* CONTRACTOR SIDE — WHITE */
 .how-contractor{background:var(--w);color:#000;padding:5rem 6%;}
 .how-contractor .hw-head{margin-bottom:3rem;}
 .how-contractor .hw-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
@@ -119,7 +89,6 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 .step-body-c h4{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;margin-bottom:.35rem;color:#000;}
 .step-body-c p{font-size:.82rem;color:#666;line-height:1.7;font-weight:300;}
 .step-body-c .step-tag{display:inline-block;background:var(--o);color:var(--w);font-size:.6rem;font-family:'Space Mono',monospace;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;margin-top:.5rem;}
-/* WORKER SIDE — BLACK */
 .how-worker{background:#000;color:var(--w);padding:5rem 6%;border-left:1px solid rgba(255,255,255,.06);}
 .how-worker .hw-head{margin-bottom:3rem;}
 .how-worker .hw-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
@@ -135,10 +104,9 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 .step-body-w p{font-size:.82rem;color:var(--w4);line-height:1.7;font-weight:300;}
 .step-body-w .step-tag{display:inline-block;background:var(--o);color:var(--w);font-size:.6rem;font-family:'Space Mono',monospace;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;margin-top:.5rem;}
 
-/* SAY DAY PAY */
+/* SAME DAY PAY */
 #pay{background:var(--o);padding:5rem 5%;}
 .pay-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.pay-left{}
 .pay-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
 .pay-eyebrow::before{content:'';width:20px;height:2px;background:rgba(255,255,255,.7);}
 .pay-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,10vw,9rem);line-height:.85;color:var(--w);margin-bottom:1.5rem;}
@@ -172,7 +140,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 .trust-icon{width:40px;height:40px;background:var(--o);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem;}
 .trust-title{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;margin-bottom:.5rem;color:var(--w);letter-spacing:.04em;}
 .trust-desc{font-size:.8rem;color:var(--w4);line-height:1.65;font-weight:300;}
-.trust-bottom{background:var(--o);padding:1.5rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:0;}
+.trust-bottom{background:var(--o);padding:1.5rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
 .trust-bottom-stats{display:flex;gap:3rem;flex-wrap:wrap;}
 .tbs{text-align:center;}
 .tbs-n{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--w);line-height:1;}
@@ -203,7 +171,6 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,10rem);line-hei
 /* SIGNUP */
 #signup{background:#000;padding:5rem 5%;}
 .signup-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
-.signup-left{}
 .signup-eyebrow{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--o);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
 .signup-eyebrow::before{content:'';width:20px;height:2px;background:var(--o);}
 .signup-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);line-height:.92;margin-bottom:1.5rem;}
@@ -240,7 +207,6 @@ footer p{color:var(--w4);font-size:.72rem;}
 .flinks a:hover{color:var(--w);}
 
 /* ANIMS */
-@keyframes particleBurst{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0);}}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
@@ -301,8 +267,6 @@ footer p{color:var(--w4);font-size:.72rem;}
       <span class="sdpay-dot"></span>
       <span data-en="GET PAID THE SAME DAY YOU WORK · EN INGLÉS Y ESPAÑOL" data-es="COBRA EL MISMO DÍA QUE TRABAJAS · IN ENGLISH AND SPANISH">GET PAID THE SAME DAY YOU WORK · EN INGLÉS Y ESPAÑOL</span>
     </div>
-
-    <!-- THE TWO BIG BUTTONS -->
     <div class="hero-btns">
       <div>
         <a href="#signup" class="cta-work" onclick="preselectRole('worker')">
@@ -319,7 +283,6 @@ footer p{color:var(--w4);font-size:.72rem;}
         <div class="cta-label" data-en="For contractors · Post a job in 2 min" data-es="Para contratistas · Publica un trabajo en 2 min">For contractors · Post a job in 2 min</div>
       </div>
     </div>
-
     <div class="hstats">
       <div class="hstat"><div class="hsnum" data-en="FREE" data-es="GRATIS">FREE</div><div class="hslbl" data-en="For Workers" data-es="Para Trabajadores">For Workers</div></div>
       <div class="hstat"><div class="hsnum" data-en="SAME DAY" data-es="MISMO DÍA">SAME DAY</div><div class="hslbl" data-en="Payment" data-es="Pago">Payment</div></div>
@@ -337,8 +300,6 @@ footer p{color:var(--w4);font-size:.72rem;}
     <div><div class="how-label-sub" data-en="Simple · Fast · Fair · No middlemen" data-es="Simple · Rápido · Justo · Sin intermediarios">Simple · Fast · Fair · No middlemen</div></div>
   </div>
   <div class="how-grid">
-
-    <!-- CONTRACTOR SIDE — WHITE -->
     <div class="how-contractor reveal">
       <div class="hw-head">
         <div class="hw-eyebrow" data-en="For Contractors" data-es="Para Contratistas">For Contractors</div>
@@ -372,8 +333,6 @@ footer p{color:var(--w4);font-size:.72rem;}
         </div>
       </div>
     </div>
-
-    <!-- WORKER SIDE — BLACK -->
     <div class="how-worker reveal">
       <div class="hw-head">
         <div class="hw-eyebrow" data-en="For Workers" data-es="Para Trabajadores">For Workers</div>
@@ -407,7 +366,6 @@ footer p{color:var(--w4);font-size:.72rem;}
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -436,7 +394,7 @@ footer p{color:var(--w4);font-size:.72rem;}
   </div>
 </section>
 
-<!-- TRUST — AGGRESSIVE -->
+<!-- TRUST -->
 <section id="trust">
   <div class="trust-bar">
     <div class="trust-bar-item"><span class="trust-bar-dot"></span><span class="trust-bar-text" data-en="The corner never protected you." data-es="La esquina nunca te protegió.">The corner never protected you.</span></div>
@@ -563,11 +521,9 @@ footer p{color:var(--w4);font-size:.72rem;}
 </footer>
 
 <script>
-// REVEAL
 const ro=new IntersectionObserver((es)=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);ro.unobserve(e.target);}});},{threshold:0.07});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-// LANGUAGE
 let lang='en';
 function setLang(l){
   lang=l;
@@ -581,7 +537,6 @@ function setLang(l){
   document.getElementById('html-root').lang=l==='es'?'es':'en';
 }
 
-// PRESELECT ROLE FROM HERO BUTTONS
 function preselectRole(role){
   setTimeout(()=>{
     const sel=document.getElementById('roleSelect');
@@ -596,18 +551,15 @@ function preselectRole(role){
   },400);
 }
 
-// STEP INTERACTIVITY
 function activateStep(el,groupId){
   document.querySelectorAll('#'+groupId+' [class^="how-step"]').forEach(s=>s.classList.remove('active'));
   el.classList.add('active');
 }
 
-// AUTO-ACTIVATE FIRST STEPS
 document.querySelectorAll('.how-step-c:first-of-type,.how-step-w:first-of-type').forEach(s=>{
   if(s)setTimeout(()=>s.classList.add('active'),800);
 });
 
-// FORM SUBMIT
 function handleSubmit(e){
   e.preventDefault();
   const b=e.target.querySelector('.sub-btn'),m=document.getElementById('succMsg');
@@ -619,7 +571,6 @@ function handleSubmit(e){
   },4000);
 }
 
-// SMOOTH SCROLL TO SIGNUP + FOCUS
 document.querySelectorAll('.cta-work,.cta-hire').forEach(btn=>{
   btn.addEventListener('click',function(e){
     e.preventDefault();
