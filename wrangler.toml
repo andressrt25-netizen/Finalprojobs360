@@ -2,6 +2,11 @@ name = "finalprojobs360"
 main = "worker.js"
 compatibility_date = "2026-04-28"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+routes = [
+  { pattern = "projobs360.com/*", zone_name = "projobs360.com" },
+  { pattern = "www.projobs360.com/*", zone_name = "projobs360.com" }
+]
 
 [observability]
 enabled = true
@@ -9,7 +14,7 @@ enabled = true
 [[d1_databases]]
 binding = "DB"
 database_name = "finalprojobs360-db"
-database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+database_id = "9d6bfb6d-abee-428f-88ea-e2c23a221f3f"
 migrations_dir = "migrations"
 
 [assets]

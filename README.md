@@ -29,6 +29,17 @@ Deploy to Cloudflare Workers:
 npm run deploy
 ```
 
+The current `workers.dev` hostname may be protected by Cloudflare Access. To make
+the site public on `projobs360.com`, add Workers route edit permissions to the API
+token, then add these routes to `wrangler.toml`:
+
+```toml
+routes = [
+  { pattern = "projobs360.com/*", zone_name = "projobs360.com" },
+  { pattern = "www.projobs360.com/*", zone_name = "projobs360.com" }
+]
+```
+
 Create and migrate the production D1 database:
 
 ```sh
