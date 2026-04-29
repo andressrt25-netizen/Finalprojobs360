@@ -22,3 +22,9 @@ Smoke-check the server syntax:
 ```sh
 npm test
 ```
+
+Deploy to Cloudflare Workers:
+
+```sh
+CLOUDFLARE_API_TOKEN=your-token npx wrangler deploy
+```
