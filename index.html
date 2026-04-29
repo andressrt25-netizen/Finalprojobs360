@@ -580,8 +580,8 @@
         });
 
         statusEl.textContent = role === 'worker'
-          ? `Thanks, ${name || 'worker'} - we will text you when local construction jobs open.`
-          : `Thanks, ${name || 'contractor'} - we will follow up about filling your next crew.`;
+          ? `Thanks, ${name || 'worker'}. We will text you when construction jobs open near you.`
+          : `Thanks, ${name || 'contractor'}. We will follow up about filling your next crew.`;
         form.reset();
       } catch (error) {
         statusEl.textContent = 'Signup saved on this page, but the local API is not reachable yet.';
