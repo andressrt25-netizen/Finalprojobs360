@@ -2,10 +2,10 @@
   "name": "finalprojobs360",
   "version": "1.0.0",
   "description": "Finalprojobs360 is the final product of projobs360",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.html",
-    "test": "node --input-type=commonjs --check < index.html"
+    "start": "node server.js",
+    "test": "node --check server.js"
   },
   "repository": {
     "type": "git",
