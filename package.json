@@ -1,0 +1,25 @@
+{
+  "name": "finalprojobs360",
+  "version": "1.0.0",
+  "description": "Finalprojobs360 is the final product of projobs360",
+  "main": "index.html",
+  "scripts": {
+    "start": "node index.html",
+    "test": "node --check index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andressrt25-netizen/Finalprojobs360.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andressrt25-netizen/Finalprojobs360/issues"
+  },
+  "homepage": "https://github.com/andressrt25-netizen/Finalprojobs360#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
