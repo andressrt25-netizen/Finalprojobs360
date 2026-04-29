@@ -5,10 +5,11 @@ const { randomUUID } = require('crypto');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const publicDir = path.join(__dirname, 'public');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(publicDir));
 
 // TEMP DATABASE (replace with Firebase later)
 let users = [];
@@ -67,7 +68,7 @@ app.get('/employer/applications/:jobId', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 app.listen(port, () => console.log(`API and website running on http://localhost:${port}`));

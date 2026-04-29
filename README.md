@@ -26,5 +26,26 @@ npm test
 Deploy to Cloudflare Workers:
 
 ```sh
-CLOUDFLARE_API_TOKEN=your-token npx wrangler deploy
+npm run deploy
+```
+
+Create and migrate the production D1 database:
+
+```sh
+npx wrangler d1 create finalprojobs360-db
+# Paste the returned database_id into wrangler.toml.
+npm run d1:migrate:local
+npm run d1:migrate:prod
+# or run the production helper:
+npm run d1:push:prod
+```
+
+Configure production secrets:
+
+```sh
+npx wrangler secret put STRIPE_SECRET_KEY
+npx wrangler secret put STRIPE_WEBHOOK_SECRET
+npx wrangler secret put TWILIO_ACCOUNT_SID
+npx wrangler secret put TWILIO_AUTH_TOKEN
+npx wrangler secret put TWILIO_FROM_NUMBER
 ```

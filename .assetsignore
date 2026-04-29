@@ -1,9 +1,0 @@
-.*
-CLAUDE.md.
-README.md
-node_modules/
-package-lock.json
-package.json
-server.js
-worker.js
-wrangler.jsonc
