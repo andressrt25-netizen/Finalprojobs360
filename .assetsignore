@@ -1,0 +1,8 @@
+.*
+CLAUDE.md.
+README.md
+package-lock.json
+package.json
+server.js
+worker.js
+wrangler.jsonc
