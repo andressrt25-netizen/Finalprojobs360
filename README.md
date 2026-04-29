@@ -34,10 +34,8 @@ Create and migrate the production D1 database:
 ```sh
 npx wrangler d1 create finalprojobs360-db
 # Paste the returned database_id into wrangler.toml.
-npm run d1:migrate:local
-npm run d1:migrate:prod
-# or run the production helper:
-npm run d1:push:prod
+npm run db:migrate:local
+npm run db:migrate:prod
 ```
 
 Configure production secrets:
